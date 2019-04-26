@@ -11,9 +11,9 @@
 }
 .fa-folder-plus, .fa-react
 {
-    font-size: 40px;
+    font-size: 35px;
     /*color: #007bff !important;*/
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 .leftTrace{
     float: right;
@@ -23,4 +23,9 @@
 }
 .container {
     margin-top:  10px !important;
+}
+.footerTxt .primary {
+    color: #007bff !important;
+    font-weight: bold;
+    /* text-decoration: underline; */
 }
