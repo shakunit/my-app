@@ -1,0 +1,23 @@
+.card-footer {
+    padding: .75rem 1.25rem;
+    background-color:#fff;
+    border: none !important;
+}
+.myArtical{
+    margin-top: 10px;
+}
+.cursor{
+    cursor: pointer;
+}
+.fa-folder-plus, .fa-react
+{
+    font-size: 40px;
+    /*color: #007bff !important;*/
+    margin-bottom: 15px;
+}
+.leftTrace{
+    float: right;
+}
+.footerTxt .primary{
+    color: #007bff !important;
+}
