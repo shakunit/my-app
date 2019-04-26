@@ -130,7 +130,7 @@ toggle() {
                     <Form>
                         
                         <span onClick={this.toggle} className="cursor"><i className="fas fa-folder-plus"></i></span>
-                        <span className="cursor"><i class="fab fa-react"></i></span>
+                        <span className="cursor"><i className="fab fa-react"></i></span>
                         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                         <ModalHeader toggle={this.toggle}>Artical</ModalHeader>
                         <ModalBody>

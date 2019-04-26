@@ -21,3 +21,6 @@
 .footerTxt .primary{
     color: #007bff !important;
 }
+.container {
+    margin-top:  10px !important;
+}

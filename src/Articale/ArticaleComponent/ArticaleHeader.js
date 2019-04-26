@@ -22,7 +22,7 @@ constructor(props) {
   render(){
     return(
       <div>
-        <Navbar color="light" light expand="md">
+        <Navbar light expand="md">
           <NavbarBrand href="/">reactstrap</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

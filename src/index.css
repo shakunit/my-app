@@ -4,9 +4,45 @@
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-    background-color: #fff;
+    
     background-clip: border-box;
-    border: 1px solid rgba(0,0,0,.125);
-    border-radius: .25rem;
-    margin-bottom: 1rem;
+    border: 0px solid rgba(0,0,0,.125) !important;
+    border-radius: 0px !important;
+    background-color: #fff !important;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24) !important;
+    margin-bottom: 15px;
+}
+
+
+body {
+    color: #3d4451 !important;
+    background-color: #efefef !important;
+}
+.navbar {
+        background-color: #fff !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.19), 0 6px 10px rgba(0, 0, 0, 0.23) !important;
+}
+.bg-light {
+    background-color: #fff !important;
+}
+.card-header {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.card-header:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+.card-footer {
+    padding: 0.35rem 1.25rem !important;
+    background-color: #d8dadc52 !important;
+    
+}
+
+.card-header {
+    padding: .35rem 1.25rem !important;
+    margin-bottom: 0;
+    background-color: #fff !important;
+    border-bottom: 1px solid #d8dadc!important;
 }
