@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText, Jumbotron,  Card, CardHeader, CardFooter, CardBody,  CardTitle, CardText, CardImg} from 'reactstrap';
+import { Container, Collapse, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText, Jumbotron,  Card, CardHeader, CardFooter, CardBody,  CardTitle, CardText, CardImg} from 'reactstrap';
 
 import Firebase from "firebase";
 
 import Config from './Config';
 import './QueryForm.css'
-import QueryHeader from './QueryHeader';
+
 
 class QueryForm extends  Component{
 constructor(props) {
@@ -15,7 +15,9 @@ constructor(props) {
 
     this.state = {
         modal: false,
-        articalDB: []
+        
+        articalDB: [],
+        
     };
 
     this.toggle = this.toggle.bind(this);
@@ -61,8 +63,9 @@ event.preventDefault();
     let issueDetail = this.refs.issueDetail.value;
     let currentDate = this.fnCurrentDate();
     let uid = this.refs.uid.value;
+    let issueStatusDetail = "Pending";
 
-    if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate) {
+    if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatusDetail) {
       const { articalDB } = this.state;
       const devIndex = articalDB.findIndex(data => {
         return data.uid === uid;
@@ -72,11 +75,12 @@ event.preventDefault();
       articalDB[issueBrowser].issueBrowser = issueBrowser;
       articalDB[issueDetail].issueDetail = issueDetail;
       articalDB[currentDate].currentDate = currentDate;
+      articalDB[issueStatusDetail].issueStatusDetail = issueStatusDetail;
       this.setState({ articalDB });
-    } else if (userName && issueTitle) {
+    } else if (userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatusDetail) {
       const uid = new Date().getTime().toString();
       const { articalDB } = this.state;
-      articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate });
+      articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatusDetail });
       this.setState({ articalDB });
     }
 
@@ -85,29 +89,35 @@ event.preventDefault();
     this.refs.issueBrowser.value = "";
     this.refs.issueDetail.value = "";
     this.currentDate = "";
+    this.issueStatusDetail = "";
     this.refs.uid.value = "";
     
     this.setState({modal:false});
 
    };
 
-
-removeData = developer => {
+issueStatus = crntItm => {
+  const { articalDB } = this.state;
+  const newState = articalDB.filter(data => {
+    return data.uid;
+  });
+  console.log("issueStatus"+this.issueStatus());
+}
+removeData = remomeItem => {
     const { articalDB } = this.state;
     const newState = articalDB.filter(data => {
-      return data.uid !== developer.uid;
+      return data.uid !== remomeItem.uid;
     });
     this.setState({ articalDB: newState });
   };
 
 updateData = articalDB => {
-    this.setState({modal:true});
-    this.refs.uid.value = articalDB.uid;
-    this.refs.userName.value = articalDB.userName;
-    this.refs.issueTitle.value = articalDB.issueTitle;
-    this.refs.issueBrowser.value = articalDB.issueBrowser;
-    this.refs.issueDetail.value = articalDB.issueDetail;
-
+ 
+    // this.refs.uid.value = articalDB.uid;
+    // this.refs.userName.value = articalDB.userName;
+    // this.refs.issueTitle.value = articalDB.issueTitle;
+    // this.refs.issueBrowser.value = articalDB.issueBrowser;
+    // this.refs.issueDetail.value = articalDB.issueDetail;
   };
 
 toggle() {
@@ -122,14 +132,13 @@ toggle() {
         const { articalDB } = this.state;
         return(
             <div className="myArtical">
-            
                <Container>
                 <Row>
-                
-                <Col  xs="1">
+               
+                <Col  xs="3">
                     <Form>
                         
-                        <Button onClick={this.toggle} className="cursor"><i className="fas fa-folder-plus"></i>Add Issue</Button>
+                        <Button onClick={this.toggle} className="btn "><i className="fas fa-folder-plus"></i>Add Issue</Button>
                         
                         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                         <ModalHeader toggle={this.toggle}>Artical</ModalHeader>
@@ -159,7 +168,7 @@ toggle() {
                         </Modal>
                     </Form>                
                 </Col>
-                <Col xs="11"> 
+                <Col xs="9"> 
                 {articalDB.map(articalDB => (
                     <Card>
                         <CardHeader><h3>{articalDB.issueTitle}</h3></CardHeader>
@@ -180,7 +189,18 @@ toggle() {
                           <small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.userName}</i> on <i className="primary">{articalDB.currentDate}</i> </small>
                           
                           <span onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
+                          <span onClick={() => this.updateData(articalDB)} className="cursor leftTrace">update</span>
                         </CardFooter>
+                        {console.log("varIssueStatusDetail..."+articalDB.issueStatusDetail)}
+                        
+                        { this.state.articalDB.issueStatusDetail ? 
+                        <div>
+                        <Form className="issueStatusDetail">
+                            <small for="issueStatusDetail">Updation Details:</small>
+                            <textarea className="form-control" rows="3" id="issueStatusDetail" ref="issueStatusDetail"></textarea>
+                            <Button color="primary" onClick={''} className="leftTrace">Submit</Button>
+                        </Form>
+                      </div>: null }
                     </Card>
                             
                     ))}                     

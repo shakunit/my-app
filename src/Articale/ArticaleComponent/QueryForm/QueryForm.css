@@ -14,6 +14,7 @@
     font-size: 35px;
     /*color: #007bff !important;*/
     margin-bottom: 0px;
+    display: block;
 }
 .leftTrace{
     float: right;
@@ -28,4 +29,11 @@
     color: #007bff !important;
     font-weight: bold;
     /* text-decoration: underline; */
+}
+.issueStatusDetail{
+    margin: 15px;
+}
+.issueStatusDetail button{
+    margin: 10px 0px;
+    position: a;
 }
