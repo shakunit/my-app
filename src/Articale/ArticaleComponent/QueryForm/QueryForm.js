@@ -77,6 +77,8 @@ event.preventDefault();
       const uid = new Date().getTime().toString();
       const { articalDB } = this.state;
       articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate });
+      //var newPostKey = Firebase.database().ref().child('articalDB').push().devIndex;
+      
       this.setState({ articalDB });
     }
 
@@ -97,16 +99,27 @@ removeData = developer => {
     const newState = articalDB.filter(data => {
       return data.uid !== developer.uid;
     });
+    
     this.setState({ articalDB: newState });
   };
 
-updateData = articalDB => {
-    this.setState({modal:true});
-    this.refs.uid.value = articalDB.uid;
-    this.refs.userName.value = articalDB.userName;
-    this.refs.issueTitle.value = articalDB.issueTitle;
-    this.refs.issueBrowser.value = articalDB.issueBrowser;
-    this.refs.issueDetail.value = articalDB.issueDetail;
+updateData = (articalDB) => {
+  
+
+  
+  // Now simply find the parent and return the name.
+  
+  //console.log("articalDB>>>>>"+ref.parent().name())
+    //this.setState({modal:true});
+    
+    let adaNameRef = Firebase.database().ref('articalDB/3/');
+    
+    adaNameRef.update({ userName: 'Ada', });
+    // this.refs.uid.value = articalDB.uid;
+    // this.refs.userName.value = articalDB.userName;
+    // this.refs.issueTitle.value = articalDB.issueTitle;
+    // this.refs.issueBrowser.value = articalDB.issueBrowser;
+    // this.refs.issueDetail.value = articalDB.issueDetail;
 
   };
 
@@ -180,6 +193,7 @@ toggle() {
                           <small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.userName}</i> on <i className="primary">{articalDB.currentDate}</i> </small>
                           
                           <span onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
+                          <span onClick={() => this.updateData(articalDB)} className="cursor leftTrace">Update</span>
                         </CardFooter>
                     </Card>
                             
