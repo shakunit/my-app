@@ -35,5 +35,17 @@
 }
 .issueStatusDetail button{
     margin: 10px 0px;
-    position: a;
+    
+}
+.issueStatusDetail small{
+    margin: 6px 3px;
+    /* font-weight: bold; */
+    display: inline-block;
+}
+.issueStatusDetail small, .issueStatusDetailtxt, .issueStatusDetailBtn{
+    font-size: 75% !important;
+}
+.updatedWrap{
+    background-color: #fff !important;
+    border-top: 1px solid #d8dadc!important;
 }
