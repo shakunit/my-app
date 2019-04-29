@@ -15,6 +15,8 @@ constructor(props) {
 
     this.state = {
         modal: false,
+        inputTxt:'',
+        textareaTxt:'',
         articalDB: []
     };
 
@@ -103,25 +105,26 @@ removeData = developer => {
     this.setState({ articalDB: newState });
   };
 
-updateData = (articalDB) => {
+updateData = (index) => {
   
-
-  
-  // Now simply find the parent and return the name.
-  
-  //console.log("articalDB>>>>>"+ref.parent().name())
-    //this.setState({modal:true});
+    let adaNameRef = Firebase.database().ref('articalDB/'+index+'/');
     
-    let adaNameRef = Firebase.database().ref('articalDB/3/');
-    
-    adaNameRef.update({ userName: 'Ada', });
-    // this.refs.uid.value = articalDB.uid;
-    // this.refs.userName.value = articalDB.userName;
-    // this.refs.issueTitle.value = articalDB.issueTitle;
-    // this.refs.issueBrowser.value = articalDB.issueBrowser;
-    // this.refs.issueDetail.value = articalDB.issueDetail;
+    adaNameRef.update({ 
+        updaterName: this.state.inputTxt,
+        updatedIssueDetail:this.state.textareaTxt,
+        issueStatus: true,
+        updationDate: this.fnCurrentDate()
+    });
+       
+      this.setState({inputTxt : null})
+      this.setState({textareaTxt : null})
+  
 
   };
+
+
+updateInputBox = (event) => {this.setState({inputTxt : event.target.value })}
+updateTextareaBox = (event) => {this.setState({textareaTxt : event.target.value })}
 
 toggle() {
     this.setState(prevState => ({
@@ -173,15 +176,18 @@ toggle() {
                     </Form>                
                 </Col>
                 <Col xs="10"> 
-                {articalDB.map(articalDB => (
+                
+                {articalDB.map((articalDB, index) => (
                     <Card>
                         <CardHeader><h3>{articalDB.issueTitle}</h3></CardHeader>
+                        
                         <CardBody>
                         <Container>
                             <Row>
                                 <Col xs="2"><CardImg top width="100%" src="https://cdn.auth0.com/blog/react-js/react.png" alt="Card image cap" /></Col>
                                 <Col xs="10">
                                     <CardText>{articalDB.issueDetail}</CardText>
+                                    
                                      <i className="text-muted">Reported Browser:   {articalDB.issueBrowser}</i>
                                 </Col>
                             </Row>
@@ -191,10 +197,36 @@ toggle() {
                         </CardBody>
                         <CardFooter>
                           <small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.userName}</i> on <i className="primary">{articalDB.currentDate}</i> </small>
-                          
                           <span onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
-                          <span onClick={() => this.updateData(articalDB)} className="cursor leftTrace">Update</span>
                         </CardFooter>
+                        {articalDB.issueStatus ? (
+                             <div className="issueStatusDetail">
+                                <div className="updationBox">
+                                    <Container>Answer/Soluction:</Container>
+                                    <Container><CardText>{articalDB.updatedIssueDetail}</CardText></Container>
+                                </div>    
+                                <div className="footer"><small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.updaterName}</i> on <i className="primary">{articalDB.updationDate}</i> </small></div>
+                            </div>
+
+                        ) : (
+                            
+                           <div className="issueStatusDetail">
+                            <Form>
+                            <FormGroup>
+                                    <input type="hidden" ref="uid" />
+                                    <Label for="updaterName" className="issueStatusDetailtxt">Name:</Label>
+                                    <input type="text" name="name" id="updaterName" placeholder="Enter your name" onChange={this.updateInputBox} value={this.state.inputTxt} className="form-control issueStatusDetailtxt"/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="updatedIssueDetail" className="issueStatusDetailtxt">Issue Details:</Label>
+                                    <textarea rows="3" id="updatedIssueDetail" ref="updatedIssueDetail" className="form-control issueStatusDetailtxt" onChange={this.updateTextareaBox} ></textarea>
+                                    <Button color="primary" onClick={() => this.updateData(index)} className="issueStatusDetailtxt">Submit</Button>
+                                </FormGroup>
+                                
+                            </Form> 
+                        </div>
+                        )}
+                           
                     </Card>
                             
                     ))}                     
