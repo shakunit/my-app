@@ -44,7 +44,7 @@ writeUserData = () => {
     Firebase.database()
       .ref("/")
       .set(this.state);
-    console.log("DATA SAVED");
+    //console.log("DATA SAVED");
   };
 
   getUserData = () => {
@@ -63,8 +63,10 @@ event.preventDefault();
     let issueDetail = this.refs.issueDetail.value;
     let currentDate = this.fnCurrentDate();
     let uid = this.refs.uid.value;
+    let issueStatus = this.handleFormSubmit();
+    console.log("handleFormSubmit>>>>>>>>>>>>>"+issueStatus)
 
-    if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate) {
+    if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus) {
       const { articalDB } = this.state;
       const devIndex = articalDB.findIndex(data => {
         return data.uid === uid;
@@ -74,11 +76,12 @@ event.preventDefault();
       articalDB[issueBrowser].issueBrowser = issueBrowser;
       articalDB[issueDetail].issueDetail = issueDetail;
       articalDB[currentDate].currentDate = currentDate;
+      articalDB[issueStatus].issueStatus = issueStatus;
       this.setState({ articalDB });
-    } else if (userName && issueTitle && issueBrowser && issueDetail && currentDate) {
+    } else if (userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus) {
       const uid = new Date().getTime().toString();
       const { articalDB } = this.state;
-      articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate });
+      articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatus });
       //var newPostKey = Firebase.database().ref().child('articalDB').push().devIndex;
       
       this.setState({ articalDB });
@@ -106,13 +109,13 @@ removeData = developer => {
   };
 
 updateData = (index) => {
-  
+ 
     let adaNameRef = Firebase.database().ref('articalDB/'+index+'/');
     
     adaNameRef.update({ 
         updaterName: this.state.inputTxt,
         updatedIssueDetail:this.state.textareaTxt,
-        issueStatus: true,
+        issueStatus: "Fixed",
         updationDate: this.fnCurrentDate()
     });
        
@@ -131,14 +134,25 @@ toggle() {
         modal: !prevState.modal
     }));
 }
-    
+
+handleOptionChange = (changeEvent) => {
+    this.setState({
+      selectedOption: changeEvent.target.value
+    });
+  }
+  
+handleFormSubmit = (formSubmitEvent) =>{
+    //formSubmitEvent.preventDefault();
+
+  console.log('You have selected:', this.state.selectedOption);
+  return this.state.selectedOption;
+}  
 
 
     render(){
         const { articalDB } = this.state;
         return(
             <div className="myArtical">
-            
                <Container>
                 <Row>
                 
@@ -162,6 +176,18 @@ toggle() {
                             <FormGroup>
                                 <Label for="issueBrowser">Browser:</Label>
                                 <input type="text" name="issue" id="issueBrowser" placeholder="Enter your issue browser" ref="issueBrowser" className="form-control"/>
+                                
+                            </FormGroup>
+                            <Label for="exampleFile">Issue Status:</Label>
+                            <FormGroup check inline className="radioWrap">
+                                <Label check>
+                                    <input type="radio" value="Open" checked={this.state.selectedOption === 'Open'} onChange={this.handleOptionChange}/> Open
+                                </Label>
+                            </FormGroup>
+                            <FormGroup check inline>
+                                <Label check>  
+                                    <input type="radio" value="Close" checked={this.state.selectedOption === 'Close'} onChange={this.handleOptionChange}/> Close
+                                </Label>
                             </FormGroup>
                              <FormGroup>
                                 <Label for="issueDetail">Issue Details:</Label>
@@ -180,7 +206,7 @@ toggle() {
                 {articalDB.map((articalDB, index) => (
                     <Card>
                         <CardHeader><h3>{articalDB.issueTitle}</h3></CardHeader>
-                        
+
                         <CardBody>
                         <Container>
                             <Row>
@@ -199,33 +225,41 @@ toggle() {
                           <small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.userName}</i> on <i className="primary">{articalDB.currentDate}</i> </small>
                           <span onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
                         </CardFooter>
-                        {articalDB.issueStatus ? (
-                             <div className="issueStatusDetail">
-                                <div className="updationBox">
-                                    <Container>Answer/Soluction:</Container>
-                                    <Container><CardText>{articalDB.updatedIssueDetail}</CardText></Container>
-                                </div>    
-                                <div className="footer"><small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.updaterName}</i> on <i className="primary">{articalDB.updationDate}</i> </small></div>
-                            </div>
-
-                        ) : (
-                            
-                           <div className="issueStatusDetail">
-                            <Form>
-                            <FormGroup>
-                                    <input type="hidden" ref="uid" />
-                                    <Label for="updaterName" className="issueStatusDetailtxt">Name:</Label>
-                                    <input type="text" name="name" id="updaterName" placeholder="Enter your name" onChange={this.updateInputBox} value={this.state.inputTxt} className="form-control issueStatusDetailtxt"/>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="updatedIssueDetail" className="issueStatusDetailtxt">Issue Details:</Label>
-                                    <textarea rows="3" id="updatedIssueDetail" ref="updatedIssueDetail" className="form-control issueStatusDetailtxt" onChange={this.updateTextareaBox} ></textarea>
-                                    <Button color="primary" onClick={() => this.updateData(index)} className="issueStatusDetailtxt">Submit</Button>
-                                </FormGroup>
+                            {(() => {
+                            switch(articalDB.issueStatus ) {
                                 
-                            </Form> 
-                        </div>
-                        )}
+                                case "Open":
+                                return (
+                                    <div className="issueStatusDetail">
+                                        <Form>
+                                        <FormGroup>
+                                                <input type="hidden" ref="uid" />
+                                                <Label for="updaterName" className="issueStatusDetailtxt">Name:</Label>
+                                                <textarea rows="1" name="name" id="updaterName" placeholder="Enter your name" onChange={this.updateInputBox} className="form-control issueStatusDetailtxt" ></textarea>
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label for="updatedIssueDetail" className="issueStatusDetailtxt">Issue Details:</Label>
+                                                <textarea rows="3" id="updatedIssueDetail" ref="updatedIssueDetail" className="form-control issueStatusDetailtxt" onChange={this.updateTextareaBox} ></textarea>
+                                                <Button color="primary" onClick={() => this.updateData(index)} className="issueStatusDetailtxt">Submit</Button>
+                                            </FormGroup>
+                                            
+                                        </Form> 
+                                    </div>
+                                );
+                                case "Fixed":
+                                return (
+                                    <div className="issueStatusDetail">
+                                        <div className="updationBox">
+                                            <Container>Answer/Soluction:</Container>
+                                            <Container><CardText>{articalDB.updatedIssueDetail}</CardText></Container>
+                                        </div>    
+                                        <div className="footer"><small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.updaterName}</i> on <i className="primary">{articalDB.updationDate}</i> </small></div>
+                                    </div>
+                                );
+                                default:
+                                return null;
+                            }
+                            })()}
                            
                     </Card>
                             
