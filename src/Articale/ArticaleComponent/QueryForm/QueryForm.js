@@ -204,7 +204,9 @@ handleFormSubmit = (formSubmitEvent) =>{
                 <Col xs="10"> 
                 
                 {articalDB.map((articalDB, index) => (
-                    <Card>
+                    
+                    <Card key={index}>
+                    {index}
                         <CardHeader><h3>{articalDB.issueTitle}</h3></CardHeader>
 
                         <CardBody>
@@ -263,7 +265,7 @@ handleFormSubmit = (formSubmitEvent) =>{
                            
                     </Card>
                             
-                    ))}                     
+                    )).reverse()}                     
                 </Col>
                 </Row>
             </Container>  
