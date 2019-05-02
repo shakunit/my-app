@@ -60,6 +60,18 @@
 .updatedWrap .footer{
 
 }
-.radioWrap{
-    
+.issueLock{
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    font-size: 25px;
+   
+}
+.recLock{color: #721c24;}
+
+.greenLock{color: #155724;}
+.radioWrap
+{position: relative;
+top: 2px;
+left: 12px;
 }

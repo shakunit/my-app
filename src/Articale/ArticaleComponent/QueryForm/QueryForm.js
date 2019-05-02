@@ -52,7 +52,9 @@ writeUserData = () => {
     ref.on("value", snapshot => {
       const state = snapshot.val();
       this.setState(state);
+      
     });
+    
   };
 
 handleSubmit = event => {
@@ -64,8 +66,7 @@ event.preventDefault();
     let currentDate = this.fnCurrentDate();
     let uid = this.refs.uid.value;
     let issueStatus = this.handleFormSubmit();
-    console.log("handleFormSubmit>>>>>>>>>>>>>"+issueStatus)
-
+    
     if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus) {
       const { articalDB } = this.state;
       const devIndex = articalDB.findIndex(data => {
@@ -93,7 +94,8 @@ event.preventDefault();
     this.refs.issueDetail.value = "";
     this.currentDate = "";
     this.refs.uid.value = "";
-    
+    this.selectedOption = null;
+    this.setState({selectedOption:null});
     this.setState({modal:false});
 
    };
@@ -121,7 +123,7 @@ updateData = (index) => {
        
       this.setState({inputTxt : null})
       this.setState({textareaTxt : null})
-  
+
 
   };
 
@@ -148,6 +150,55 @@ handleFormSubmit = (formSubmitEvent) =>{
   return this.state.selectedOption;
 }  
 
+lockIcon = (articalDB) =>{
+    
+        switch(articalDB.issueStatus ) {
+            case "Open":
+            return (<span className="issueLock recLock"><i className="fas fa-lock-open"></i></span>);
+            case "Close":
+            return (<span className="issueLock greenLock"><i className="fas fa-lock"></i></span>);
+            case "Fixed":
+            return (<span className="issueLock greenLock"><i className="fas fa-lock"></i></span>);
+            default:
+            return null;
+      }
+}
+
+articalUpdateList = (articalDB, index) =>{
+    switch(articalDB.issueStatus ) {
+                                
+        case "Open":
+        return (
+            <div className="issueStatusDetail">
+                <Form>
+                <FormGroup>
+                        <input type="hidden" ref="uid" />
+                        <Label for="updaterName" className="issueStatusDetailtxt">Name:</Label>
+                        <textarea rows="1" name="name" id="updaterName" placeholder="Enter your name" onChange={this.updateInputBox} className="form-control issueStatusDetailtxt" ></textarea>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="updatedIssueDetail" className="issueStatusDetailtxt">Issue Details:</Label>
+                        <textarea rows="3" id="updatedIssueDetail" ref="updatedIssueDetail" className="form-control issueStatusDetailtxt" onChange={this.updateTextareaBox} ></textarea>
+                        <Button color="primary" onClick={() => this.updateData(index)} className="issueStatusDetailtxt">Submit</Button>
+                    </FormGroup>
+                    
+                </Form> 
+            </div>
+        );
+        case "Fixed":
+        return (
+            <div className="issueStatusDetail">
+                <div className="updationBox">
+                    <Container>Answer/Soluction:</Container>
+                    <Container><CardText>{articalDB.updatedIssueDetail}</CardText></Container>
+                </div>    
+                <div className="footer"><small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.updaterName}</i> on <i className="primary">{articalDB.updationDate}</i> </small></div>
+            </div>
+        );
+        default:
+        return null;
+    }
+}
 
     render(){
         const { articalDB } = this.state;
@@ -155,7 +206,6 @@ handleFormSubmit = (formSubmitEvent) =>{
             <div className="myArtical">
                <Container>
                 <Row>
-                
                 <Col  xs="2">
                     <Form>
                         
@@ -184,7 +234,7 @@ handleFormSubmit = (formSubmitEvent) =>{
                                     <input type="radio" value="Open" checked={this.state.selectedOption === 'Open'} onChange={this.handleOptionChange}/> Open
                                 </Label>
                             </FormGroup>
-                            <FormGroup check inline>
+                            <FormGroup check inline  className="radioWrap">
                                 <Label check>  
                                     <input type="radio" value="Close" checked={this.state.selectedOption === 'Close'} onChange={this.handleOptionChange}/> Close
                                 </Label>
@@ -206,8 +256,11 @@ handleFormSubmit = (formSubmitEvent) =>{
                 {articalDB.map((articalDB, index) => (
                     
                     <Card key={index}>
-                    {index}
-                        <CardHeader><h3>{articalDB.issueTitle}</h3></CardHeader>
+                        <CardHeader>
+                            <h3>{articalDB.issueTitle}</h3> 
+                            {this.lockIcon(articalDB)}
+                           
+                        </CardHeader>
 
                         <CardBody>
                         <Container>
@@ -227,41 +280,7 @@ handleFormSubmit = (formSubmitEvent) =>{
                           <small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.userName}</i> on <i className="primary">{articalDB.currentDate}</i> </small>
                           <span onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
                         </CardFooter>
-                            {(() => {
-                            switch(articalDB.issueStatus ) {
-                                
-                                case "Open":
-                                return (
-                                    <div className="issueStatusDetail">
-                                        <Form>
-                                        <FormGroup>
-                                                <input type="hidden" ref="uid" />
-                                                <Label for="updaterName" className="issueStatusDetailtxt">Name:</Label>
-                                                <textarea rows="1" name="name" id="updaterName" placeholder="Enter your name" onChange={this.updateInputBox} className="form-control issueStatusDetailtxt" ></textarea>
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <Label for="updatedIssueDetail" className="issueStatusDetailtxt">Issue Details:</Label>
-                                                <textarea rows="3" id="updatedIssueDetail" ref="updatedIssueDetail" className="form-control issueStatusDetailtxt" onChange={this.updateTextareaBox} ></textarea>
-                                                <Button color="primary" onClick={() => this.updateData(index)} className="issueStatusDetailtxt">Submit</Button>
-                                            </FormGroup>
-                                            
-                                        </Form> 
-                                    </div>
-                                );
-                                case "Fixed":
-                                return (
-                                    <div className="issueStatusDetail">
-                                        <div className="updationBox">
-                                            <Container>Answer/Soluction:</Container>
-                                            <Container><CardText>{articalDB.updatedIssueDetail}</CardText></Container>
-                                        </div>    
-                                        <div className="footer"><small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.updaterName}</i> on <i className="primary">{articalDB.updationDate}</i> </small></div>
-                                    </div>
-                                );
-                                default:
-                                return null;
-                            }
-                            })()}
+                            {this.articalUpdateList(articalDB, index)}
                            
                     </Card>
                             
