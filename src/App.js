@@ -12,7 +12,7 @@ class App extends Component {
        <ArticaleHeader/>
           <Container>
                 <Row>
-                  <Col>
+                  <Col >
                     <Articale/>
                   </Col>
                 </Row>

@@ -7,12 +7,10 @@ class Artical extends  Component{
     
     render(){
         return(
-            <Container>
-                <Row>
-                
-                <Col> <QueryForm/></Col>
-            </Row>
-            </Container>
+            <div>
+                <QueryForm/>
+            </div>
+
         )
     }
 }

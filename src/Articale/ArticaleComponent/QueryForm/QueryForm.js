@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText, CardImg} from 'reactstrap';
+import { InputGroup, InputGroupText, InputGroupAddon, Input, Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText, CardImg} from 'reactstrap';
 
 import Firebase from "firebase";
 
@@ -205,12 +205,31 @@ articalUpdateList = (articalDB, index) =>{
         return(
             <div className="myArtical">
                <Container>
+                   
                 <Row>
-                <Col  xs="2">
-                    <Form>
+                <Col className="padding_0">
+                <Form className="cardWrap">
+                    <Row>
+                        <Col sm="3"><Button onClick={this.toggle} color="success" className="addArticaleBtn"><i class="fa fa-plus"></i> <span className="newBtn">Add New Articale</span></Button></Col>
+                        <Col sm="4">
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                <InputGroupText>By Keyword</InputGroupText>
+                                </InputGroupAddon>
+                                <Input />
+                            </InputGroup>
+                        </Col>
+                        <Col sm="5">
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                <InputGroupText>Sort by</InputGroupText>
+                                </InputGroupAddon>
+                                <Input />
+                            </InputGroup>
+                        </Col>
                         
-                        <Button onClick={this.toggle} className="cursor"><i className="fas fa-folder-plus"></i>Add Issue</Button>
-                        
+                    </Row>
+                   
                         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                         <ModalHeader toggle={this.toggle}>Artical</ModalHeader>
                         <ModalBody>
@@ -249,10 +268,11 @@ articalUpdateList = (articalDB, index) =>{
                             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                         </Modal>
-                    </Form>                
-                </Col>
-                <Col xs="10"> 
-                
+                    </Form>
+                    </Col>                
+                </Row>
+                <Row className="listItm"> 
+                <Col className="padding_0">
                 {articalDB.map((articalDB, index) => (
                     
                     <Card key={index}>
@@ -285,7 +305,7 @@ articalUpdateList = (articalDB, index) =>{
                     </Card>
                             
                     )).reverse()}                     
-                </Col>
+                    </Col>
                 </Row>
             </Container>  
                     

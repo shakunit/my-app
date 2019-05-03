@@ -1,6 +1,6 @@
 .card-footer {
-    padding: .75rem 1.25rem;
-    background-color:#fff;
+    padding: 0.35rem 1.25rem !important;
+    background-color: rgba(216, 218, 220, 0.2) !important;
     border: none !important;
 }
 .myArtical{
@@ -9,13 +9,7 @@
 .cursor{
     cursor: pointer;
 }
-.fa-folder-plus, .fa-react
-{
-    font-size: 35px;
-    /*color: #007bff !important;*/
-    margin-bottom: 0px;
-    display: block;
-}
+
 .leftTrace{
     float: right;
 }
@@ -74,4 +68,25 @@
 {position: relative;
 top: 2px;
 left: 12px;
+}
+.cardWrap{
+    padding: 10px;
+    background-color: #dbdcde;
+    border: 1px solid #cecece !important;
+    border-bottom: none !important;
+}
+.newBtn {
+    margin-left: 6px;
+    margin-right: 6px;
+}
+.listItm{
+    max-height: 800px;
+    overflow: auto;
+}
+.padding_0{
+    padding: 0px !important;
+}
+.addArticaleBtn{
+    width: 100%;
+    margin-bottom: 2px;
 }
