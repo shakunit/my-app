@@ -10,7 +10,7 @@
     border-radius: 0px !important;
     background-color: #fff !important;
     /* box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24) !important; */
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 
@@ -25,12 +25,7 @@ body {
 .bg-light {
     background-color: #fff !important;
 }
-.card-header {
-    padding: .75rem 1.25rem;
-    margin-bottom: 0;
-    background-color: #fff;
-    border-bottom: 1px solid rgba(0,0,0,.125);
-}
+
 .card-header:first-child {
     border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
 }
@@ -43,8 +38,10 @@ body {
 .card-header {
     padding: .35rem 1.25rem !important;
     margin-bottom: 0;
-    background-color: #fff !important;
-    border-bottom: 1px solid #d8dadc!important;
+    background-color:rgba(216, 218, 220, 0.2) !important;
+    border-bottom: 0px solid #d8dadc!important;
+    
+    
 }
 .navbar-light .navbar-brand{
     color: #fff !important;

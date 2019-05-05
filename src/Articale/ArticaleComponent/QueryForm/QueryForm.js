@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { InputGroup, InputGroupText, InputGroupAddon, Input, Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText, CardImg} from 'reactstrap';
+import { UncontrolledCollapse, InputGroup, InputGroupText, InputGroupAddon, Input, Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText, CardImg} from 'reactstrap';
 
 import Firebase from "firebase";
 
 import Config from './Config';
 import './QueryForm.css'
 
+function searchingFor(term){
+    return function (x){
+        return x.issueTitle.toLowerCase().includes(term.toLowerCase()) || !term;
+        
+    }
+} 
 
 class QueryForm extends  Component{
 constructor(props) {
@@ -17,10 +23,12 @@ constructor(props) {
         modal: false,
         inputTxt:'',
         textareaTxt:'',
+        term:'',
         articalDB: []
     };
 
     this.toggle = this.toggle.bind(this);
+    this.searchHandler = this.searchHandler.bind(this);
 }
 
 fnCurrentDate = () => {
@@ -31,13 +39,23 @@ fnCurrentDate = () => {
 } 
 componentDidMount() {
     this.getUserData();
+    console.log("componentDidMount")
+    
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState !== this.state) {
       this.writeUserData();
     }
+    this.removeUnwantedData();
   }
+
+
+removeUnwantedData = () =>{
+    // let removeItm_1 = Firebase.database().ref('inputTxt/');
+    // removeItm_1.remove();
+      
+}
 
 
 writeUserData = () => {
@@ -200,31 +218,39 @@ articalUpdateList = (articalDB, index) =>{
     }
 }
 
+
+searchHandler(event){
+    this.setState({term: event.target.value});
+}
+
+
+
+
     render(){
-        const { articalDB } = this.state;
+        const { term, articalDB } = this.state;
+        
         return(
             <div className="myArtical">
                <Container>
-                   
                 <Row>
                 <Col className="padding_0">
                 <Form className="cardWrap">
                     <Row>
-                        <Col sm="3"><Button onClick={this.toggle} color="success" className="addArticaleBtn"><i class="fa fa-plus"></i> <span className="newBtn">Add New Articale</span></Button></Col>
+                        <Col sm="3"><Button onClick={this.toggle} color="success" className="addArticaleBtn"><i className="fa fa-plus"></i> <span className="newBtn">Add New</span></Button></Col>
                         <Col sm="4">
-                            <InputGroup>
+                        <InputGroup>
                                 <InputGroupAddon addonType="prepend">
-                                <InputGroupText>By Keyword</InputGroupText>
+                                <InputGroupText><i className="fas fa-sliders-h"></i> <span>By Issue</span></InputGroupText>
                                 </InputGroupAddon>
-                                <Input />
-                            </InputGroup>
+                                <input type="text" className="form-control" onChange={this.searchHandler} value={this.state.term}/>
+                        </InputGroup>
                         </Col>
                         <Col sm="5">
                             <InputGroup>
                                 <InputGroupAddon addonType="prepend">
-                                <InputGroupText>Sort by</InputGroupText>
+                                <InputGroupText>By User</InputGroupText>
                                 </InputGroupAddon>
-                                <Input />
+                                <input type="text" className="form-control"/>
                             </InputGroup>
                         </Col>
                         
@@ -273,15 +299,16 @@ articalUpdateList = (articalDB, index) =>{
                 </Row>
                 <Row className="listItm"> 
                 <Col className="padding_0">
-                {articalDB.map((articalDB, index) => (
-                    
+                {articalDB.filter(searchingFor(term)).map((articalDB, index) => (
                     <Card key={index}>
                         <CardHeader>
+                            
                             <h3>{articalDB.issueTitle}</h3> 
                             {this.lockIcon(articalDB)}
+                            <small className="text-muted showDetails" id={"toggler"+index} style={{ marginBottom: '1rem' }}>View <i class="fa fa-arrow-right" aria-hidden="true"></i></small>
                            
                         </CardHeader>
-
+                        <UncontrolledCollapse toggler={"#toggler"+index}>
                         <CardBody>
                         <Container>
                             <Row>
@@ -301,7 +328,7 @@ articalUpdateList = (articalDB, index) =>{
                           <span onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
                         </CardFooter>
                             {this.articalUpdateList(articalDB, index)}
-                           
+                    </UncontrolledCollapse>   
                     </Card>
                             
                     )).reverse()}                     
