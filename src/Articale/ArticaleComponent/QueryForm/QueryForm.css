@@ -1,6 +1,6 @@
 .card-footer {
-    padding: 0.35rem 1.25rem !important;
-    background-color: rgba(216, 218, 220, 0.2) !important;
+    /* padding: 0.35rem 1.25rem !important; */
+    background-color:#fff !important;
     border: none !important;
 }
 .myArtical{
@@ -12,6 +12,9 @@
 
 .leftTrace{
     float: right;
+}
+.footerTxt{
+    margin-left: 40px;
 }
 .footerTxt .primary{
     color: #007bff !important;
@@ -27,6 +30,7 @@
 }
 .issueStatusDetail{
     border-top: 1px solid #d8dadc!important;
+    padding: 0px 46px;
 }
 .issueStatusDetail Form{
     margin: 15px;
@@ -34,10 +38,11 @@
 .issueStatusDetail .updationBox{
     margin: 0px;
 }
-.issueStatusDetail Button{
-   margin: 0px 0px;
+.issueStatusDetail Button {
+    margin: 0px 0px;
     float: right;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 .issueStatusDetail small{
     margin: 6px 3px;
@@ -52,26 +57,29 @@
     border-top: 1px solid #d8dadc!important;
 }
 
-.issueLock{
+.issueLock {
     position: absolute;
-    right: 70px;
-    top: 6px;
+    left: 15px;
+    top: 0px;
     font-size: 25px;
-   
+    display: block;
+    width: 31px;
+    height: 36px;
 }
-.recLock{color: #721c24;}
+.recLock{background: url(../../assets/images/Unlock.png) no-repeat scroll center center;}
 
-.greenLock{color: #155724;}
-.radioWrap
-{position: relative;
-top: 2px;
-left: 12px;
+.greenLock{background: url(../../assets/images/Lock.png) no-repeat scroll center center;}
+
+.radioWrap{
+    position: relative;
+    top: 2px;
+    left: 12px;
 }
 .cardWrap{
     padding: 10px;
     background-color: #dbdcde;
     border: 1px solid #cecece !important;
-    border-bottom: none !important;
+    /* border-bottom: none !important; */
 }
 .newBtn {
     margin-left: 6px;
@@ -80,13 +88,15 @@ left: 12px;
 .listItm{
     max-height: 700px;
     overflow: auto;
+    margin-top: 5px;
 }
 .padding_0{
     padding: 0px !important;
 }
 .addArticaleBtn{
-    width: 100%;
-    margin-bottom: 2px;
+    margin-left: 25px;
+    margin-right: 25px;
+    
 }
 .showDetails{
     position: absolute;
@@ -118,4 +128,82 @@ left: 12px;
 }
 .input-group-text i {
     margin-top: 0.1rem;
+}
+
+
+.card-header {
+    /* padding: .35rem 1.25rem !important; */
+    margin-bottom: 0;
+    background-color:#d1e8fa !important;
+    border-bottom: 0px solid #d8dadc!important;
+    
+    width: 100.01%;
+    
+    
+}
+.navbar-light .navbar-brand{
+    color: #fff !important;
+}
+.navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover{
+    color: rgba(255, 255, 255, .8) !important;
+}
+.navbar-light .navbar-nav .nav-link{
+    color: #fff !important;
+}
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+    color: rgba(255, 255, 255,.8) !important;
+}
+.hdrTxt {
+    font-size: 16px !important;
+    color: #000 !important;
+    width: 91%;
+    margin-left: 40px;
+    position: relative;
+    top: 3px;
+    /* background: red; */
+}
+.margn_25{
+ margin-left: 25px;
+}
+
+.text_14{
+    font-size: 14px !important;
+}
+.btnSuccess {
+    color: #fff !important;
+    background-color: #168780 !important;
+    border-color: #fff !important;
+}
+.btnSuccess:hover {
+    color: #fff !important;
+    background-color: #0e5450 !important;
+    border-color: #fff !important;
+}
+.input-group{
+    width: 35% !important;
+    margin-right: 25px;
+}
+.lineData {
+    margin: 0px 3px 0px 3px;
+}
+.grayData{
+    color: #8d8d8d !important
+}
+.card-body {
+    flex: 1 1 auto;
+    padding: 0.3rem 1.25rem 0.8rem 1.25rem !important;
+}
+.border_radius_0{
+    border-radius: 0px !important;
+}
+
+.issueStatusDetail .cardText{
+    margin: 0px 0px 20px 0px !important;
+    font-size: 14px !important;
+}
+.SoluctionHdr{
+    font-size: 14px !important;
+}
+.issueStatusDetail .footerTxt{
+    margin-left: 14px !important;
 }

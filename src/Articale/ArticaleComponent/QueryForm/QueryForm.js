@@ -47,13 +47,14 @@ componentDidMount() {
     if (prevState !== this.state) {
       this.writeUserData();
     }
-    this.removeUnwantedData();
+    // this.removeUnwantedData();
+    
   }
 
 
 removeUnwantedData = () =>{
-    // let removeItm_1 = Firebase.database().ref('inputTxt/');
-    // removeItm_1.remove();
+     let removeItm_1 = Firebase.database().ref('inputTxt/');
+     removeItm_1.remove();
       
 }
 
@@ -63,6 +64,7 @@ writeUserData = () => {
       .ref("/")
       .set(this.state);
     //console.log("DATA SAVED");
+    
   };
 
   getUserData = () => {
@@ -172,11 +174,11 @@ lockIcon = (articalDB) =>{
     
         switch(articalDB.issueStatus ) {
             case "Open":
-            return (<span className="issueLock recLock"><i className="fas fa-lock-open"></i></span>);
+            return (<span className="issueLock recLock"></span>);
             case "Close":
-            return (<span className="issueLock greenLock"><i className="fas fa-lock"></i></span>);
+            return (<span className="issueLock greenLock"></span>);
             case "Fixed":
-            return (<span className="issueLock greenLock"><i className="fas fa-lock"></i></span>);
+            return (<span className="issueLock greenLock"></span>);
             default:
             return null;
       }
@@ -192,12 +194,12 @@ articalUpdateList = (articalDB, index) =>{
                 <FormGroup>
                         <input type="hidden" ref="uid" />
                         <Label for="updaterName" className="issueStatusDetailtxt">Name:</Label>
-                        <textarea rows="1" name="name" id="updaterName" placeholder="Enter your name" onChange={this.updateInputBox} className="form-control issueStatusDetailtxt" ></textarea>
+                        <textarea rows="1" name="name" id="updaterName" placeholder="Enter your name" onChange={this.updateInputBox} className="border_radius_0 form-control issueStatusDetailtxt" ></textarea>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="updatedIssueDetail" className="issueStatusDetailtxt">Issue Details:</Label>
-                        <textarea rows="3" id="updatedIssueDetail" ref="updatedIssueDetail" className="form-control issueStatusDetailtxt" onChange={this.updateTextareaBox} ></textarea>
-                        <Button color="primary" onClick={() => this.updateData(index)} className="issueStatusDetailtxt">Submit</Button>
+                        <Label for="updatedIssueDetail" className="issueStatusDetailtxt">Soluction Details:</Label>
+                        <textarea rows="3" id="updatedIssueDetail" ref="updatedIssueDetail" className="border_radius_0 form-control issueStatusDetailtxt" onChange={this.updateTextareaBox} ></textarea>
+                        <Button onClick={() => this.updateData(index)} className="issueStatusDetailtxt btnSuccess">Submit</Button>
                     </FormGroup>
                     
                 </Form> 
@@ -207,10 +209,10 @@ articalUpdateList = (articalDB, index) =>{
         return (
             <div className="issueStatusDetail">
                 <div className="updationBox">
-                    <Container>Answer/Soluction:</Container>
-                    <Container><CardText>{articalDB.updatedIssueDetail}</CardText></Container>
+                    <Container className="SoluctionHdr"><u><b>Soluction:</b></u></Container>
+                    <Container><CardText className="cardText">{articalDB.updatedIssueDetail}</CardText></Container>
                 </div>    
-                <div className="footer"><small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.updaterName}</i> on <i className="primary">{articalDB.updationDate}</i> </small></div>
+                <div className="footer"><small className="footerTxt font-italic grayData">Posted by:  <i className="primary">{articalDB.updaterName}</i> <span className="lineData">|</span> Posted on: <i className="primary">{articalDB.updationDate}</i> </small></div>
             </div>
         );
         default:
@@ -236,23 +238,23 @@ searchHandler(event){
                 <Col className="padding_0">
                 <Form className="cardWrap">
                     <Row>
-                        <Col sm="3"><Button onClick={this.toggle} color="success" className="addArticaleBtn"><i className="fa fa-plus"></i> <span className="newBtn">Add New</span></Button></Col>
-                        <Col sm="4">
+                        <Button onClick={this.toggle} className="addArticaleBtn btnSuccess"><i className="fa fa-plus"></i> <span className="newBtn">New</span></Button>
+                        
                         <InputGroup>
                                 <InputGroupAddon addonType="prepend">
                                 <InputGroupText><i className="fas fa-sliders-h"></i> <span>By Issue</span></InputGroupText>
                                 </InputGroupAddon>
                                 <input type="text" className="form-control" onChange={this.searchHandler} value={this.state.term}/>
                         </InputGroup>
-                        </Col>
-                        <Col sm="5">
+                        
+                        
                             <InputGroup>
                                 <InputGroupAddon addonType="prepend">
                                 <InputGroupText>By User</InputGroupText>
                                 </InputGroupAddon>
                                 <input type="text" className="form-control"/>
                             </InputGroup>
-                        </Col>
+                       
                         
                     </Row>
                    
@@ -303,7 +305,7 @@ searchHandler(event){
                     <Card key={index}>
                         <CardHeader>
                             
-                            <h3>{articalDB.issueTitle}</h3> 
+                            <h3 className="hdrTxt">{articalDB.issueTitle}</h3> 
                             {this.lockIcon(articalDB)}
                             <small className="text-muted showDetails" id={"toggler"+index} style={{ marginBottom: '1rem' }}>View <i class="fa fa-arrow-right" aria-hidden="true"></i></small>
                            
@@ -312,11 +314,11 @@ searchHandler(event){
                         <CardBody>
                         <Container>
                             <Row>
-                                <Col xs="2"><CardImg top width="100%" src="https://cdn.auth0.com/blog/react-js/react.png" alt="Card image cap" /></Col>
-                                <Col xs="10">
-                                    <CardText>{articalDB.issueDetail}</CardText>
+                                {/* <Col xs="2"><CardImg top width="100%" src="https://cdn.auth0.com/blog/react-js/react.png" alt="Card image cap" /></Col> */}
+                                <Col className="margn_25">
+                                    <CardText className="text_14">{articalDB.issueDetail}</CardText>
                                     
-                                     <i className="text-muted">Reported Browser:   {articalDB.issueBrowser}</i>
+                                     <span className="text_14"><u>Reported Browser:</u>    <small><i>{articalDB.issueBrowser}</i></small></span>
                                 </Col>
                             </Row>
                         </Container>
@@ -324,7 +326,7 @@ searchHandler(event){
                         
                         </CardBody>
                         <CardFooter>
-                          <small className="text-muted footerTxt">Posted by:  <i className="primary">{articalDB.userName}</i> on <i className="primary">{articalDB.currentDate}</i> </small>
+                          <small className="footerTxt font-italic grayData">Posted by:  <i className="primary">{articalDB.userName}</i> <span className="lineData">|</span> Posted on: <i className="primary">{articalDB.currentDate}</i> </small>
                           <span onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
                         </CardFooter>
                             {this.articalUpdateList(articalDB, index)}
