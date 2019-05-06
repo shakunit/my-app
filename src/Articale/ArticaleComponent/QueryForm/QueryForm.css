@@ -207,3 +207,19 @@
 .issueStatusDetail .footerTxt{
     margin-left: 14px !important;
 }
+.txtbtnSuccess {
+    
+    color: #168780 !important;
+    margin: 0px;
+    width: auto;
+    height: auto;
+    padding: 7px 0px;
+}
+.txtbtnSuccess:hover {
+    cursor: pointer;
+    color: #0e5450 !important;
+    
+}
+.input-group input{
+    border-radius: 0px !important;
+}

@@ -47,15 +47,13 @@ componentDidMount() {
     if (prevState !== this.state) {
       this.writeUserData();
     }
-    // this.removeUnwantedData();
+    
     
   }
 
 
-removeUnwantedData = () =>{
-     let removeItm_1 = Firebase.database().ref('inputTxt/');
-     removeItm_1.remove();
-      
+clearFilter = () =>{
+    this.setState({ term: ""});
 }
 
 
@@ -254,7 +252,7 @@ searchHandler(event){
                                 </InputGroupAddon>
                                 <input type="text" className="form-control"/>
                             </InputGroup>
-                       
+                            <div onClick={this.clearFilter} className="txtbtnSuccess text-right">Clear All</div>
                         
                     </Row>
                    
