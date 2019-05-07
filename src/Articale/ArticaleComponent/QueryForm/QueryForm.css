@@ -223,3 +223,43 @@
 .input-group input{
     border-radius: 0px !important;
 }
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #f4f5f7 !important;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 0rem !important;
+    outline: 0;
+}
+.modal-header {
+    display: flex;
+    
+    
+    padding: 0.5rem 1rem !important;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 0rem !important;
+    background-color: #3f91cb !important;
+}
+.detailForm .close{
+    display: none !important;
+}
+.detailForm .modal-header .modal-title{
+    font-size: 16px !important; 
+    color: #fff !important;
+}
+.modal-backdrop {
+  
+    background-color: #fff !important;
+}
+.modal-backdrop.show {
+    opacity: .8 !important;
+}
+.statusradio {
+    /* position: relative; */
+    top: 11px;
+}
+.statusradio input:nth-child(2){ margin-left: 25px;}

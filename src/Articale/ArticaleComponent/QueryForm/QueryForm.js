@@ -256,42 +256,48 @@ searchHandler(event){
                         
                     </Row>
                    
-                        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                        <ModalHeader toggle={this.toggle}>Artical</ModalHeader>
+                        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} className="detailForm">
+                        <ModalHeader toggle={this.toggle}>New Artical</ModalHeader>
                         <ModalBody>
-                            <FormGroup>
+                            
+                            <FormGroup row>
                                 <input type="hidden" ref="uid" />
-                                <Label for="userName">Name:</Label>
+                                <Label for="userName" sm={2}>Name:</Label>
+                                <Col sm={10}>
                                 <input type="text" name="name" id="userName" placeholder="Enter your name" ref="userName" className="form-control"/>
+                                </Col>
                             </FormGroup>
-                            <FormGroup>
-                                <Label for="issueTitle">Issue:</Label>
-                                <input type="text" name="issue" id="issueTitle" placeholder="Enter your issue" ref="issueTitle" className="form-control"/>
+                            <FormGroup row>
+                                <Label for="issueTitle" sm={2}>Issue:</Label>
+                                <Col sm={10}>
+                                    <input type="text" name="issue" id="issueTitle" placeholder="Enter your issue" ref="issueTitle" className="form-control"/>
+                                </Col>
                             </FormGroup>
-                            <FormGroup>
-                                <Label for="issueBrowser">Browser:</Label>
-                                <input type="text" name="issue" id="issueBrowser" placeholder="Enter your issue browser" ref="issueBrowser" className="form-control"/>
-                                
+                            <FormGroup row>
+                                <Label for="issueBrowser" sm={2}>Browser:</Label>
+                                <Col sm={10}>
+                                    <input type="text" name="issue" id="issueBrowser" placeholder="Enter your issue browser" ref="issueBrowser" className="form-control"/>
+                                </Col>
                             </FormGroup>
-                            <Label for="exampleFile">Issue Status:</Label>
-                            <FormGroup check inline className="radioWrap">
-                                <Label check>
-                                    <input type="radio" value="Open" checked={this.state.selectedOption === 'Open'} onChange={this.handleOptionChange}/> Open
-                                </Label>
+                            
+                            <FormGroup inline row>
+                            <Label for="issueBrowser" sm={2}>Browser:</Label>
+                            <Col sm={10} className="statusradio">
+                                    <input type="radio" value="Open" checked={this.state.selectedOption === 'Open'} onChange={this.handleOptionChange} /> Open
+                                    <input type="radio" value="Close" checked={this.state.selectedOption === 'Close'} onChange={this.handleOptionChange} /> Close
+                            </Col>
                             </FormGroup>
-                            <FormGroup check inline  className="radioWrap">
-                                <Label check>  
-                                    <input type="radio" value="Close" checked={this.state.selectedOption === 'Close'} onChange={this.handleOptionChange}/> Close
-                                </Label>
-                            </FormGroup>
-                             <FormGroup>
-                                <Label for="issueDetail">Issue Details:</Label>
-                                <textarea className="form-control" rows="3" id="issueDetail" ref="issueDetail"></textarea>
+                            
+                             <FormGroup row>
+                                <Label for="issueDetail"sm={2}>Soluction:</Label>
+                                <Col sm={10}>
+                                    <textarea className="form-control" rows="4" id="issueDetail" ref="issueDetail"></textarea>
+                                </Col>
                             </FormGroup>
                          </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={this.handleSubmit}>Submit</Button>
-                            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                            <Button className="btnSuccess" onClick={this.handleSubmit}>Submit</Button>
+                            <Button className="btnSuccess" onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                         </Modal>
                     </Form>
