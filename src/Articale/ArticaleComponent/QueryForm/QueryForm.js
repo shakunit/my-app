@@ -84,8 +84,10 @@ event.preventDefault();
     let currentDate = this.fnCurrentDate();
     let uid = this.refs.uid.value;
     let issueStatus = this.handleFormSubmit();
+    let url = this.refs.url.value;
     
-    if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus) {
+    
+    if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url) {
       const { articalDB } = this.state;
       const devIndex = articalDB.findIndex(data => {
         return data.uid === uid;
@@ -96,11 +98,12 @@ event.preventDefault();
       articalDB[issueDetail].issueDetail = issueDetail;
       articalDB[currentDate].currentDate = currentDate;
       articalDB[issueStatus].issueStatus = issueStatus;
+      articalDB[url].url = url;
       this.setState({ articalDB });
-    } else if (userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus) {
+    } else if (userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url) {
       const uid = new Date().getTime().toString();
       const { articalDB } = this.state;
-      articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatus });
+      articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatus, url});
       //var newPostKey = Firebase.database().ref().child('articalDB').push().devIndex;
       
       this.setState({ articalDB });
@@ -110,6 +113,7 @@ event.preventDefault();
     this.refs.issueTitle.value = "";
     this.refs.issueBrowser.value = "";
     this.refs.issueDetail.value = "";
+    this.refs.url.value = "";
     this.currentDate = "";
     this.refs.uid.value = "";
     this.selectedOption = null;
@@ -188,19 +192,21 @@ articalUpdateList = (articalDB, index) =>{
         case "Open":
         return (
             <div className="issueStatusDetail">
-                <Form>
-                <FormGroup>
-                        <input type="hidden" ref="uid" />
-                        <Label for="updaterName" className="issueStatusDetailtxt">Name:</Label>
-                        <textarea rows="1" name="name" id="updaterName" placeholder="Enter your name" onChange={this.updateInputBox} className="border_radius_0 form-control issueStatusDetailtxt" ></textarea>
-                    </FormGroup>
+                <div className="updationBox">
+                    <Form>
                     <FormGroup>
-                        <Label for="updatedIssueDetail" className="issueStatusDetailtxt">Soluction Details:</Label>
-                        <textarea rows="3" id="updatedIssueDetail" ref="updatedIssueDetail" className="border_radius_0 form-control issueStatusDetailtxt" onChange={this.updateTextareaBox} ></textarea>
-                        <Button onClick={() => this.updateData(index)} className="issueStatusDetailtxt btnSuccess">Submit</Button>
-                    </FormGroup>
-                    
-                </Form> 
+                            <input type="hidden" ref="uid" />
+                            <Label for="updaterName" className="issueStatusDetailtxt">Name:</Label>
+                            <textarea rows="1" name="name" id="updaterName" placeholder="Enter your name" onChange={this.updateInputBox} className="border_radius_0 form-control issueStatusDetailtxt" ></textarea>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="updatedIssueDetail" className="issueStatusDetailtxt">Soluction Details:</Label>
+                            <textarea rows="3" id="updatedIssueDetail" ref="updatedIssueDetail" className="border_radius_0 form-control issueStatusDetailtxt" onChange={this.updateTextareaBox} ></textarea>
+                            <Button onClick={() => this.updateData(index)} className="issueStatusDetailtxt btnSuccess">Submit</Button>
+                        </FormGroup>
+                        
+                    </Form> 
+               </div>
             </div>
         );
         case "Fixed":
@@ -246,11 +252,11 @@ searchHandler(event){
                         </InputGroup>
                         
                         
-                            <InputGroup>
+                            <InputGroup disabled>
                                 <InputGroupAddon addonType="prepend">
-                                <InputGroupText>By User</InputGroupText>
+                                <InputGroupText disabled>By User</InputGroupText>
                                 </InputGroupAddon>
-                                <input type="text" className="form-control"/>
+                                <input type="text" className="form-control" disabled/>
                             </InputGroup>
                             <div onClick={this.clearFilter} className="txtbtnSuccess text-right">Clear All</div>
                         
@@ -280,8 +286,15 @@ searchHandler(event){
                                 </Col>
                             </FormGroup>
                             
+                            <FormGroup row>
+                                <Label for="exampleUrl" sm={2}>Url</Label>
+                                <Col sm={10}>
+                                    <input type="url" name="url" id="exampleUrl" placeholder="url placeholder" className="form-control" ref="url"/>
+                                </Col>
+                            </FormGroup>
+                            
                             <FormGroup inline row>
-                            <Label for="issueBrowser" sm={2}>Browser:</Label>
+                            <Label for="issueBrowser" sm={2}>Status:</Label>
                             <Col sm={10} className="statusradio">
                                     <input type="radio" value="Open" checked={this.state.selectedOption === 'Open'} onChange={this.handleOptionChange} /> Open
                                     <input type="radio" value="Close" checked={this.state.selectedOption === 'Close'} onChange={this.handleOptionChange} /> Close
@@ -289,7 +302,7 @@ searchHandler(event){
                             </FormGroup>
                             
                              <FormGroup row>
-                                <Label for="issueDetail"sm={2}>Soluction:</Label>
+                                <Label for="issueDetail"sm={2}>Details:</Label>
                                 <Col sm={10}>
                                     <textarea className="form-control" rows="4" id="issueDetail" ref="issueDetail"></textarea>
                                 </Col>
@@ -311,7 +324,7 @@ searchHandler(event){
                             
                             <h3 className="hdrTxt">{articalDB.issueTitle}</h3> 
                             {this.lockIcon(articalDB)}
-                            <small className="text-muted showDetails" id={"toggler"+index} style={{ marginBottom: '1rem' }}>View <i class="fa fa-arrow-right" aria-hidden="true"></i></small>
+                            <small className="text-muted showDetails" id={"toggler"+index} style={{ marginBottom: '1rem' }}>View <i className="fa fa-arrow-right" aria-hidden="true"></i></small>
                            
                         </CardHeader>
                         <UncontrolledCollapse toggler={"#toggler"+index}>
@@ -322,7 +335,8 @@ searchHandler(event){
                                 <Col className="margn_25">
                                     <CardText className="text_14">{articalDB.issueDetail}</CardText>
                                     
-                                     <span className="text_14"><u>Reported Browser:</u>    <small><i>{articalDB.issueBrowser}</i></small></span>
+                                     <span className="text_14"><u>Course Url:</u>   &nbsp; <a href={articalDB.url} class="text-primary">{articalDB.url}</a></span><br/>
+                                     <span className="text_14"><u>Reported Browser:</u>    &nbsp;<small><i>{articalDB.issueBrowser}</i></small></span>
                                 </Col>
                             </Row>
                         </Container>

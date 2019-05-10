@@ -12,6 +12,10 @@
 
 .leftTrace{
     float: right;
+    color: #168780 !important;
+}
+.leftTrace:hover{
+    color: #0e5450 !important;
 }
 .footerTxt{
     margin-left: 40px;
@@ -29,14 +33,19 @@
 
 }
 .issueStatusDetail{
-    border-top: 1px solid #d8dadc!important;
-    padding: 0px 46px;
+    /* border-top: 1px solid #d8dadc!important; */
+    padding: 0px 15px;
 }
 .issueStatusDetail Form{
     margin: 15px;
 }
-.issueStatusDetail .updationBox{
+.issueStatusDetail .updationBox {
     margin: 0px;
+    border-top: 1px solid #d8dadc!important;
+    padding: 0px 30px;
+}
+.issueStatusDetail .footer{
+    padding: 0px 31px !important;
 }
 .issueStatusDetail Button {
     margin: 0px 0px;
