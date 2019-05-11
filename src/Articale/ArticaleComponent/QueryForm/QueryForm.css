@@ -253,6 +253,9 @@
     border-radius: 0rem !important;
     background-color: #3f91cb !important;
 }
+.detailForm{
+    display: block !important;
+}
 .detailForm .close{
     display: none !important;
 }
@@ -272,3 +275,16 @@
     top: 11px;
 }
 .statusradio input:nth-child(2){ margin-left: 25px;}
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: block !important;
+}
+.myArticalSubmitForm{
+    background: rgb(128, 128, 128);
+    /* position: absolute; */
+    width: 78%;
+    margin: 0px auto;
+    z-index: 1;
+    margin-bottom: 10px;
+}

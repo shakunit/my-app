@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { UncontrolledCollapse, InputGroup, InputGroupText, InputGroupAddon, Input, Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText, CardImg} from 'reactstrap';
-import {Route} from 'react-router-dom';
+
 import Firebase from "firebase";
-import QuerySubmitForm from './QuerySubmitForm';
+
 import Config from './Config';
 import './QueryForm.css'
 
@@ -22,13 +22,14 @@ constructor(props) {
     Firebase.initializeApp(Config);
 
     this.state = {
+        modal: false,
         inputTxt:'',
         textareaTxt:'',
         term:'',
         articalDB: []
     };
 
-    
+    this.toggle = this.toggle.bind(this);
     this.searchHandler = this.searchHandler.bind(this);
 }
 
@@ -76,7 +77,52 @@ writeUserData = () => {
     
   };
 
+handleSubmit = event => {
+event.preventDefault();
+    let userName = this.refs.userName.value;
+    let issueTitle = this.refs.issueTitle.value;
+    let issueBrowser = this.refs.issueBrowser.value;
+    let issueDetail = this.refs.issueDetail.value;
+    let currentDate = this.fnCurrentDate();
+    let uid = this.refs.uid.value;
+    let issueStatus = this.handleFormSubmit();
+    let url = this.refs.url.value;
+    
+    
+    if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url) {
+      const { articalDB } = this.state;
+      const devIndex = articalDB.findIndex(data => {
+        return data.uid === uid;
+      });
+      articalDB[devIndex].userName = userName;
+      articalDB[devIndex].issueTitle = issueTitle;
+      articalDB[issueBrowser].issueBrowser = issueBrowser;
+      articalDB[issueDetail].issueDetail = issueDetail;
+      articalDB[currentDate].currentDate = currentDate;
+      articalDB[issueStatus].issueStatus = issueStatus;
+      articalDB[url].url = url;
+      this.setState({ articalDB });
+    } else if (userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url) {
+      const uid = new Date().getTime().toString();
+      const { articalDB } = this.state;
+      articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatus, url});
+      //var newPostKey = Firebase.database().ref().child('articalDB').push().devIndex;
+      
+      this.setState({ articalDB });
+    }
 
+    this.refs.userName.value = "";
+    this.refs.issueTitle.value = "";
+    this.refs.issueBrowser.value = "";
+    this.refs.issueDetail.value = "";
+    this.refs.url.value = "";
+    this.currentDate = "";
+    this.refs.uid.value = "";
+    this.selectedOption = null;
+    this.setState({selectedOption:null});
+    this.setState({modal:false});
+
+   };
 
 
 removeData = developer => {
@@ -109,7 +155,11 @@ updateData = (index) => {
 updateInputBox = (event) => {this.setState({inputTxt : event.target.value })}
 updateTextareaBox = (event) => {this.setState({textareaTxt : event.target.value })}
 
-
+toggle() {
+    this.setState(prevState => ({
+        modal: !prevState.modal
+    }));
+}
 
 handleOptionChange = (changeEvent) => {
     this.setState({
@@ -145,7 +195,6 @@ articalUpdateList = (articalDB, index) =>{
         return (
             <div className="issueStatusDetail">
                 <div className="updationBox">
-                
                     <Form>
                     <FormGroup>
                             <input type="hidden" ref="uid" />
@@ -191,18 +240,11 @@ searchHandler(event){
         return(
             <div className="myArtical">
                <Container>
-
-
-            
-
-               <QuerySubmitForm/>
-
-
                 <Row>
                 <Col className="padding_0">
                 <Form className="cardWrap">
                     <Row>
-                        <Button className="addArticaleBtn btnSuccess"><i className="fa fa-plus"></i> <span className="newBtn">New</span></Button>
+                        <Button onClick={this.toggle} className="addArticaleBtn btnSuccess"><i className="fa fa-plus"></i> <span className="newBtn">New</span></Button>
                         
                         <InputGroup>
                                 <InputGroupAddon addonType="prepend">
@@ -222,7 +264,57 @@ searchHandler(event){
                         
                     </Row>
                    
-                        
+                        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} className="detailForm">
+                        <ModalHeader toggle={this.toggle}>New Artical</ModalHeader>
+                        <ModalBody>
+                            
+                            <FormGroup row>
+                                <input type="hidden" ref="uid" />
+                                <Label for="userName" sm={2}>Name:</Label>
+                                <Col sm={10}>
+                                <input type="text" name="name" id="userName" placeholder="Enter your name" ref="userName" className="form-control"/>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="issueTitle" sm={2}>Issue:</Label>
+                                <Col sm={10}>
+                                    <input type="text" name="issue" id="issueTitle" placeholder="Enter your issue" ref="issueTitle" className="form-control"/>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="issueBrowser" sm={2}>Browser:</Label>
+                                <Col sm={10}>
+                                    <input type="text" name="issue" id="issueBrowser" placeholder="Enter your issue browser" ref="issueBrowser" className="form-control"/>
+                                </Col>
+                            </FormGroup>
+                            
+                            <FormGroup row>
+                                <Label for="exampleUrl" sm={2}>Url</Label>
+                                <Col sm={10}>
+                                    <input type="url" name="url" id="exampleUrl" placeholder="url placeholder" className="form-control" ref="url"/>
+                                </Col>
+                            </FormGroup>
+                            
+                            <FormGroup inline row>
+                            <Label for="issueBrowser" sm={2}>Status:</Label>
+                            <Col sm={10} className="statusradio">
+                                    <input type="radio" value="Open" checked={this.state.selectedOption === 'Open'} onChange={this.handleOptionChange} /> Open
+                                    <input type="radio" value="Close" checked={this.state.selectedOption === 'Close'} onChange={this.handleOptionChange} /> Close
+                            </Col>
+                            </FormGroup>
+                            
+                             <FormGroup row>
+                                <Label for="issueDetail"sm={2}>Details:</Label>
+                                <Col sm={10}>
+                                    <textarea className="form-control" rows="4" id="issueDetail" ref="issueDetail"></textarea>
+                                </Col>
+                            </FormGroup>
+                         </ModalBody>
+                        <ModalFooter>
+                            <Button className="btnSuccess" onClick={this.handleSubmit}>Submit</Button>
+                            <Button className="btnSuccess" onClick={this.toggle}>Cancel</Button>
+                        </ModalFooter>
+                        </Modal>
                     </Form>
                     </Col>                
                 </Row>
@@ -245,7 +337,7 @@ searchHandler(event){
                                 <Col className="margn_25">
                                     <CardText className="text_14">{articalDB.issueDetail}</CardText>
                                     
-                                     <span className="text_14"><u>Course Url:</u>   &nbsp; <a href={articalDB.url} className="text-primary">{articalDB.url}</a></span><br/>
+                                     <span className="text_14"><u>Course Url:</u>   &nbsp; <a href={articalDB.url} class="text-primary">{articalDB.url}</a></span><br/>
                                      <span className="text_14"><u>Reported Browser:</u>    &nbsp;<small><i>{articalDB.issueBrowser}</i></small></span>
                                 </Col>
                             </Row>
@@ -270,4 +362,4 @@ searchHandler(event){
         )
     }
 }
-export default QueryForm ;
+export default QueryForm;
