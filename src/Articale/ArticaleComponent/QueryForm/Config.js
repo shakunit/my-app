@@ -1,10 +1,11 @@
 const Config = {
-    apiKey: "AIzaSyBWZk6TXXq_8Gb49XGrUu_UQfjVjnyjVMY",
-    authDomain: "shakundata.firebaseapp.com",
-    databaseURL: "https://shakundata.firebaseio.com",
-    projectId: "shakundata",
-    storageBucket: "shakundata.appspot.com",
-    messagingSenderId: "238736096340"
+    apiKey: "AIzaSyCCsm8I34V1PNM0w-iZ6k1i__-aZ6pFrR0",
+    authDomain: "my-data-edd98.firebaseapp.com",
+    databaseURL: "https://my-data-edd98.firebaseio.com",
+    projectId: "my-data-edd98",
+    storageBucket: "my-data-edd98.appspot.com",
+    messagingSenderId: "181146597632",
+    appId: "1:181146597632:web:075254b381f1025b"
 };
 
 export default Config;

@@ -13,6 +13,8 @@ function searchingFor(term){
     }
 } 
 
+
+
 class QueryForm extends  Component{
 constructor(props) {
     super(props);
