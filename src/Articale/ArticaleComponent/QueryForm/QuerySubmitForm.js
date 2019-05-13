@@ -4,7 +4,7 @@ import { UncontrolledCollapse, InputGroup, InputGroupText, InputGroupAddon, Inpu
 import Firebase from "firebase";
 
 import Config from './Config';
-import './QueryForm.css'
+
 
 function searchingFor(term){
     return function (x){
@@ -141,8 +141,6 @@ handleFormSubmit = (formSubmitEvent) =>{
         return(
             <div className="myArticalSubmitForm">
               
-                
-                    
                         <div className="detailFormmodal fade show">
                         <ModalHeader >New Artical</ModalHeader>
                         <ModalBody>
@@ -191,7 +189,7 @@ handleFormSubmit = (formSubmitEvent) =>{
                          </ModalBody>
                         <ModalFooter>
                             <Button className="btnSuccess" onClick={this.handleSubmit}>Submit</Button>
-                            <Button className="btnSuccess" onClick={this.toggle}>Cancel</Button>
+                            <Button className="btnSuccess" id="submitForm" >Cancel</Button>
                         </ModalFooter>
                         </div>
                                 

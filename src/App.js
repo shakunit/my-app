@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Articale from './Articale/Articale';
-
+import { Router, Route, browserHistory } from 'react-router'
 import ArticaleHeader from './Articale/ArticaleComponent/ArticaleHeader'
 import { Container, Row, Col } from 'reactstrap';
 
@@ -15,7 +15,7 @@ class App extends Component {
                 <Row>
                   <Col >
                     <Articale/>
-                   
+                    
                   </Col>
                 </Row>
                 
