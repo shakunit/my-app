@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { UncontrolledCollapse, InputGroup, InputGroupText, InputGroupAddon, Input, Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText, CardImg} from 'reactstrap';
 import { Router, Route, browserHistory} from 'react-router';
 import Firebase from "firebase";
-import QuerySubmitForm from './_QuerySubmitForm';
+import QuerySubmitForm from './QuerySubmitForm';
 import Config from './Config';
 import './QueryForm.css'
 

@@ -15,7 +15,7 @@ function searchingFor(term){
 
 
 
-class QuerySubmitForm extends  Component{
+class QueryIssueClosingForm extends  Component{
 constructor(props) {
     super(props);
     this.state = {
@@ -198,4 +198,4 @@ handleFormSubmit = (formSubmitEvent) =>{
         )
     }
 }
-export default QuerySubmitForm;
+export default QueryIssueClosingForm;

@@ -6,6 +6,7 @@ import Firebase from "firebase";
 import Config from './Config';
 import './QueryForm.css'
 import QuerySubmitForm from './QuerySubmitForm';
+import QueryIssueClosingForm from './QueryIssueClosingForm';
 
 function searchingFor(term){
     return function (x){
@@ -136,14 +137,16 @@ removeData = developer => {
   };
 
 updateData = (index) => {
- 
+    
     let adaNameRef = Firebase.database().ref('articalDB/'+index+'/');
     
-    adaNameRef.update({ 
-        updaterName: this.state.inputTxt,
-        updatedIssueDetail:this.state.textareaTxt,
-        issueStatus: "Fixed",
-        updationDate: this.fnCurrentDate()
+    adaNameRef.update({
+
+        updaterName: this.state.inputTxt
+        // updatedIssueDetail:this.state.textareaTxt,
+        // issueStatus: "Fixed",
+        // updationDate: this.fnCurrentDate()
+
     });
        
       this.setState({inputTxt : null})
@@ -196,6 +199,7 @@ articalUpdateList = (articalDB, index) =>{
         return (
             <div className="issueStatusDetail">
                 <div className="updationBox">
+                
                     <Form>
                     <FormGroup>
                             <input type="hidden" ref="uid" />
@@ -243,7 +247,7 @@ searchHandler(event){
 
 
                     <UncontrolledCollapse toggler="#submitForm" className="submitFormWrap">
-                    <div className="whiteBox"></div>
+                    <div className="whiteBox" id="submitForm"></div>
                     <Card className="submitFormSubWrap">
                         <CardBody>
                         <QuerySubmitForm/>
@@ -281,7 +285,9 @@ searchHandler(event){
                 <Row className="listItm"> 
                 <Col className="padding_0">
                 {articalDB.filter(searchingFor(term)).map((articalDB, index) => (
+                    
                     <Card key={index}>
+                    <QueryIssueClosingForm dbNo={index}/>
                         <CardHeader>
                             
                             <h3 className="hdrTxt">{articalDB.issueTitle}</h3> 
@@ -308,8 +314,18 @@ searchHandler(event){
                         <CardFooter>
                           <small className="footerTxt font-italic grayData">Posted by:  <i className="primary">{articalDB.userName}</i> <span className="lineData">|</span> Posted on: <i className="primary">{articalDB.currentDate}</i> </small>
                           <span onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
+
+                          <Button color="primary" id={"UpdateBtn"+index}>Edit</Button>
                         </CardFooter>
-                            {this.articalUpdateList(articalDB, index)}
+                            
+                            {/* {this.articalUpdateList(articalDB, index)} */}
+                            <UncontrolledCollapse toggler={"#UpdateBtn"+index}>
+                            <Card>
+                                <CardBody>
+                                <QueryIssueClosingForm/>
+                                </CardBody>
+                            </Card>
+                          </UncontrolledCollapse>
                     </UncontrolledCollapse>   
                     </Card>
                             

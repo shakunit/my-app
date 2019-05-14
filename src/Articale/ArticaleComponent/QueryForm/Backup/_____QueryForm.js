@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { UncontrolledCollapse, InputGroup, InputGroupText, InputGroupAddon, Input, Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText, CardImg} from 'reactstrap';
 
 import Firebase from "firebase";
-
+import QuerySubmitForm from './QuerySubmitForm';
+import QueryNewBtn from './QueryNewBtn';
 import Config from './Config';
 import './QueryForm.css'
 
@@ -244,7 +245,7 @@ searchHandler(event){
                 <Col className="padding_0">
                 <Form className="cardWrap">
                     <Row>
-                        <Button onClick={this.toggle} className="addArticaleBtn btnSuccess"><i className="fa fa-plus"></i> <span className="newBtn">New</span></Button>
+                        <QueryNewBtn/>
                         
                         <InputGroup>
                                 <InputGroupAddon addonType="prepend">
@@ -266,54 +267,7 @@ searchHandler(event){
                    
                         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} className="detailForm">
                         <ModalHeader toggle={this.toggle}>New Artical</ModalHeader>
-                        <ModalBody>
-                            
-                            <FormGroup row>
-                                <input type="hidden" ref="uid" />
-                                <Label for="userName" sm={2}>Name:</Label>
-                                <Col sm={10}>
-                                <input type="text" name="name" id="userName" placeholder="Enter your name" ref="userName" className="form-control"/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="issueTitle" sm={2}>Issue:</Label>
-                                <Col sm={10}>
-                                    <input type="text" name="issue" id="issueTitle" placeholder="Enter your issue" ref="issueTitle" className="form-control"/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="issueBrowser" sm={2}>Browser:</Label>
-                                <Col sm={10}>
-                                    <input type="text" name="issue" id="issueBrowser" placeholder="Enter your issue browser" ref="issueBrowser" className="form-control"/>
-                                </Col>
-                            </FormGroup>
-                            
-                            <FormGroup row>
-                                <Label for="exampleUrl" sm={2}>Url</Label>
-                                <Col sm={10}>
-                                    <input type="url" name="url" id="exampleUrl" placeholder="url placeholder" className="form-control" ref="url"/>
-                                </Col>
-                            </FormGroup>
-                            
-                            <FormGroup inline row>
-                            <Label for="issueBrowser" sm={2}>Status:</Label>
-                            <Col sm={10} className="statusradio">
-                                    <input type="radio" value="Open" checked={this.state.selectedOption === 'Open'} onChange={this.handleOptionChange} /> Open
-                                    <input type="radio" value="Close" checked={this.state.selectedOption === 'Close'} onChange={this.handleOptionChange} /> Close
-                            </Col>
-                            </FormGroup>
-                            
-                             <FormGroup row>
-                                <Label for="issueDetail"sm={2}>Details:</Label>
-                                <Col sm={10}>
-                                    <textarea className="form-control" rows="4" id="issueDetail" ref="issueDetail"></textarea>
-                                </Col>
-                            </FormGroup>
-                         </ModalBody>
-                        <ModalFooter>
-                            <Button className="btnSuccess" onClick={this.handleSubmit}>Submit</Button>
-                            <Button className="btnSuccess" onClick={this.toggle}>Cancel</Button>
-                        </ModalFooter>
+                        <QuerySubmitForm/>
                         </Modal>
                     </Form>
                     </Col>                
