@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { UncontrolledCollapse, CustomInput, InputGroup, InputGroupText, InputGroupAddon, Input, Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText, CardImg} from 'reactstrap';
+import { UncontrolledCollapse, InputGroup, InputGroupText, InputGroupAddon, Input, Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText, CardImg} from 'reactstrap';
 
 import Firebase from "firebase";
 
 import Config from './Config';
 import './QueryForm.css'
 import QuerySubmitForm from './QuerySubmitForm';
-import QueryIssueClosingForm from './QueryIssueClosingForm';
 
 function searchingFor(term){
     return function (x){
@@ -81,7 +80,6 @@ writeUserData = () => {
 
 
 
-
 removeData = developer => {
     const { articalDB } = this.state;
     const newState = articalDB.filter(data => {
@@ -91,94 +89,22 @@ removeData = developer => {
     this.setState({ articalDB: newState });
   };
 
-  updateData = developer => {
-    this.refs.uid.value = developer.uid;
-    this.refs.userName.value = developer.userName;
-    this.refs.issueTitle.value = developer.issueTitle;
-    this.refs.issueBrowser.value = developer.issueBrowser;
-    this.refs.issueDetail.value = developer.issueDetail;
-    this.refs.currentDate.value = developer.currentDate;
-    this.refs.url.value = developer.url;
-    this.refs.issueStatus.value = developer.issueStatus;
-  };
-
-  handleSubmitCloseIssue = event => {
+updateData = (index) => {
+ 
+    let adaNameRef = Firebase.database().ref('articalDB/'+index+'/');
     
-        let userName = this.refs.userName.value;
-        let issueTitle = this.refs.issueTitle.value;
-        let issueBrowser = this.refs.issueBrowser.value;
-        let issueDetail = this.refs.issueDetail.value;
-        let currentDate =  this.refs.currentDate.value;
-        let uid = this.refs.uid.value;
-        let issueStatus = "Fixed";
-        let url = this.refs.url.value;
-        let updaterName =this.refs.updaterName.value;
-        let updatedIssueDetail = this.refs.updatedIssueDetail.value;
-        let updationDate =this.refs.updationDate.value;
-
-        //alert("issueBrowser=> "+issueBrowser)
-        if (uid && userName) {
-            console.log("11111")
-          const { articalDB } = this.state;
-          const devIndex = articalDB.findIndex(data => {
-            return data.uid === uid;
-          });
-          articalDB[devIndex].userName = userName;
-          articalDB[devIndex].issueTitle = issueTitle;
-          articalDB[devIndex].issueBrowser = issueBrowser;
-          articalDB[devIndex].issueDetail = issueDetail;
-          articalDB[devIndex].currentDate = currentDate;
-          articalDB[devIndex].issueStatus = issueStatus;
-          articalDB[devIndex].url = url;
-          articalDB[devIndex].updaterName = updaterName;
-          articalDB[devIndex].updatedIssueDetail = updatedIssueDetail;
-          articalDB[devIndex].updationDate = updationDate;
-
-
-          this.setState({ articalDB });
-        } else if (userName) {
-            console.log("22222")
-          const uid = new Date().getTime().toString();
-          const { articalDB } = this.state;
-          articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatus, url, updaterName, updatedIssueDetail, updationDate});
-          //var newPostKey = Firebase.database().ref().child('articalDB').push().devIndex;
-          
-          this.setState({ articalDB });
-        }
-    
-        this.refs.userName.value = "";
-        this.refs.issueTitle.value = "";
-        this.refs.issueBrowser.value = "";
-        this.refs.issueDetail.value = "";
-        this.refs.url.value = "";
-        this.currentDate = "";
-        this.refs.uid.value = "";
-        this.refs.updaterName.value = "";
-        this.refs.updatedIssueDetail.value = "";
-        this.selectedOption = null;
-        
-        this.setState({selectedOption:null});
-        
-    
-       };
-// updateData1 = (index) => {
-    
-//     let adaNameRef = Firebase.database().ref('articalDB/'+index+'/');
-    
-//     adaNameRef.update({
-
-//         updaterName: this.state.inputTxt
-//         // updatedIssueDetail:this.state.textareaTxt,
-//         // issueStatus: "Fixed",
-//         // updationDate: this.fnCurrentDate()
-
-//     });
+    adaNameRef.update({ 
+        updaterName: this.state.inputTxt,
+        updatedIssueDetail:this.state.textareaTxt,
+        issueStatus: "Fixed",
+        updationDate: this.fnCurrentDate()
+    });
        
-//       this.setState({inputTxt : null})
-//       this.setState({textareaTxt : null})
+      this.setState({inputTxt : null})
+      this.setState({textareaTxt : null})
 
 
-//   };
+  };
 
 
 updateInputBox = (event) => {this.setState({inputTxt : event.target.value })}
@@ -197,7 +123,9 @@ handleOptionChange = (changeEvent) => {
   }
   
 handleFormSubmit = (formSubmitEvent) =>{
-  
+    //formSubmitEvent.preventDefault();
+
+  console.log('You have selected:', this.state.selectedOption);
   return this.state.selectedOption;
 }  
 
@@ -222,7 +150,6 @@ articalUpdateList = (articalDB, index) =>{
         return (
             <div className="issueStatusDetail">
                 <div className="updationBox">
-                
                     <Form>
                     <FormGroup>
                             <input type="hidden" ref="uid" />
@@ -232,7 +159,7 @@ articalUpdateList = (articalDB, index) =>{
                         <FormGroup>
                             <Label for="updatedIssueDetail" className="issueStatusDetailtxt">Soluction Details:</Label>
                             <textarea rows="3" id="updatedIssueDetail" ref="updatedIssueDetail" className="border_radius_0 form-control issueStatusDetailtxt" onChange={this.updateTextareaBox} ></textarea>
-                            {/* <Button onClick={() => this.updateData(index)} className="issueStatusDetailtxt btnSuccess">Submit</Button> */}
+                            <Button onClick={() => this.updateData(index)} className="issueStatusDetailtxt btnSuccess">Submit</Button>
                         </FormGroup>
                         
                     </Form> 
@@ -269,54 +196,8 @@ searchHandler(event){
             <div className="myArtical">
 
 
-
-                                    <ModalHeader >New Artical</ModalHeader>
-                                    <ModalBody>
-                                        <FormGroup row>
-                                            <input type="hidden" ref="uid" value={articalDB.uid}/>
-                                            <input type="hidden" ref="currentDate" />
-                                            <input type="hidden" ref="issueStatus"/>
-                                            <input type="hidden" ref="updationDate" value={this.fnCurrentDate()}/>
-                                            <input type="hidden" name="name" id="userName" placeholder="Enter your name" ref="userName" className="form-control" value={articalDB.userName}/>
-                                            <input type="hidden" name="issue" id="issueTitle" placeholder="Enter your issue" ref="issueTitle" className="form-control" value={articalDB.issueTitle}/>
-                                            <input type="hidden" name="issue" id="issueBrowser" placeholder="Enter your issue browser" ref="issueBrowser" className="form-control" value={articalDB.issueBrowser}/>
-                                            <input type="hidden" name="url" id="exampleUrl" placeholder="url placeholder" className="form-control" ref="url" value={articalDB.issueBrowser}/>
-                                            <input type="hidden" className="form-control" rows="4" id="issueDetail" ref="issueDetail" value={articalDB.issueDetail}></input>
-                                        </FormGroup>
-                                        <FormGroup row>
-                                            
-                                            <Label for="updaterName" sm={2}>updaterName:</Label>
-                                            <Col sm={10}>
-                                            <input type="text" name="name" id="updaterName" placeholder="Enter your name" ref="updaterName" className="form-control" value={articalDB.updaterName}/>
-                                            </Col>
-                                        </FormGroup>
-                                        <FormGroup inline row>
-                                            <Label for="issueBrowser" sm={2}>Status:</Label>
-                                            <Col sm={10} className="statusradio">
-                                            <CustomInput type="switch" id="exampleCustomSwitch" name="customSwitch" label="Open" disabled inline/>
-                                            <CustomInput type="switch" id="exampleCustomSwitch2" name="customSwitch" label="Close" checked/> 
-                                            </Col>
-                                        </FormGroup>
-                            
-                                        <FormGroup row>
-                                            <Label for="updatedIssueDetail"sm={2}>updatedIssueDetail:</Label>
-                                            <Col sm={10}>
-                                                <textarea className="form-control" rows="4" id="updatedIssueDetail" ref="updatedIssueDetail" value={articalDB.updatedIssueDetail}></textarea>
-                                            </Col>
-                                        </FormGroup>
-
-                                    </ModalBody>
-                                    <ModalFooter>
-                                        <Button className="btnSuccess" onClick={this.handleSubmitCloseIssue}>Submit</Button>
-                                        <Button className="btnSuccess"  >Cancel</Button>
-                                    </ModalFooter>
-
-
-
-
-
                     <UncontrolledCollapse toggler="#submitForm" className="submitFormWrap">
-                    <div className="whiteBox" id="submitForm"></div>
+                    <div className="whiteBox"></div>
                     <Card className="submitFormSubWrap">
                         <CardBody>
                         <QuerySubmitForm/>
@@ -354,9 +235,7 @@ searchHandler(event){
                 <Row className="listItm"> 
                 <Col className="padding_0">
                 {articalDB.filter(searchingFor(term)).map((articalDB, index) => (
-                    
                     <Card key={index}>
-                    
                         <CardHeader>
                             
                             <h3 className="hdrTxt">{articalDB.issueTitle}</h3> 
@@ -383,12 +262,8 @@ searchHandler(event){
                         <CardFooter>
                           <small className="footerTxt font-italic grayData">Posted by:  <i className="primary">{articalDB.userName}</i> <span className="lineData">|</span> Posted on: <i className="primary">{articalDB.currentDate}</i> </small>
                           <span onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
-
-                          <Button color="primary" onClick={() => this.updateData(articalDB)} >Edit</Button>
                         </CardFooter>
-                            
-                            {/* {this.articalUpdateList(articalDB, index)} */}
-                            
+                            {this.articalUpdateList(articalDB, index)}
                     </UncontrolledCollapse>   
                     </Card>
                             

@@ -315,3 +315,7 @@
     border: none !important;
 }
 
+.custom-switch {
+    
+    float: left !important;
+}

@@ -81,25 +81,31 @@ event.preventDefault();
     let uid = this.refs.uid.value;
     let issueStatus = this.handleFormSubmit();
     let url = this.refs.url.value;
+    let updaterName =this.refs.updaterName.value;
+    let updatedIssueDetail = this.refs.updatedIssueDetail.value;
+    let updationDate =this.refs.updationDate.value;
     
-    
-    if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url) {
+    if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url ) {
       const { articalDB } = this.state;
       const devIndex = articalDB.findIndex(data => {
         return data.uid === uid;
       });
       articalDB[devIndex].userName = userName;
       articalDB[devIndex].issueTitle = issueTitle;
-      articalDB[issueBrowser].issueBrowser = issueBrowser;
-      articalDB[issueDetail].issueDetail = issueDetail;
-      articalDB[currentDate].currentDate = currentDate;
-      articalDB[issueStatus].issueStatus = issueStatus;
-      articalDB[url].url = url;
+      articalDB[devIndex].issueBrowser = issueBrowser;
+      articalDB[devIndex].issueDetail = issueDetail;
+      articalDB[devIndex].currentDate = currentDate;
+      articalDB[devIndex].issueStatus = issueStatus;
+      articalDB[devIndex].url = url;
+      articalDB[devIndex]. = updaterName;
+      articalDB[devIndex].updatedIssueDetail = updatedIssueDetail;
+      articalDB[devIndex].updationDate = updationDate;
+
       this.setState({ articalDB });
-    } else if (userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url) {
+    } else if (userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url ) {
       const uid = new Date().getTime().toString();
       const { articalDB } = this.state;
-      articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatus, url});
+      articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatus, url, updaterName, updatedIssueDetail, updationDate});
       //var newPostKey = Firebase.database().ref().child('articalDB').push().devIndex;
       
       this.setState({ articalDB });
@@ -146,6 +152,10 @@ handleFormSubmit = (formSubmitEvent) =>{
                         
                             <FormGroup row>
                                 <input type="hidden" ref="uid" />
+                                <input type="hidden" ref="updaterName" />
+                                <input type="hidden" ref="updatedIssueDetail" />
+                                <input type="hidden" ref="updationDate" />
+                                
                                 <Label for="userName" sm={2}>Name:</Label>
                                 <Col sm={10}>
                                 <input type="text" name="name" id="userName" placeholder="Enter your name" ref="userName" className="form-control"/>
