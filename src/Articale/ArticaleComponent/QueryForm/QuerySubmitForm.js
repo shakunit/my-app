@@ -97,7 +97,7 @@ event.preventDefault();
       articalDB[devIndex].currentDate = currentDate;
       articalDB[devIndex].issueStatus = issueStatus;
       articalDB[devIndex].url = url;
-      articalDB[devIndex]. = updaterName;
+      articalDB[devIndex].updaterName = updaterName;
       articalDB[devIndex].updatedIssueDetail = updatedIssueDetail;
       articalDB[devIndex].updationDate = updationDate;
 
