@@ -219,23 +219,43 @@ lockIcon = (articalDB) =>{
             return null;
       }
 }
+fnUpdateBtn= (articalDB, index) =>{
+    switch(articalDB.issueStatus ) {
+                                
+        case "Open":
+        return (
+            <span>
+            <span title="Update"  onClick={() => this.updateData(articalDB)} className="cursor UpdateBtn"></span>
+            <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
+            </span>
+        );
+        case "Fixed":
+        return (
+            <span>
+            <span title="Update"  className="cursor UpdateBtnDisable"></span>
+            <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace" ><i className="fas fa-trash-restore-alt"></i></span>
+            </span>
+        );
+        default:
+        return null;
+    }
+}
 
 articalUpdateList = (articalDB, index) =>{
     switch(articalDB.issueStatus ) {
                                 
         case "Open":
         return (
-            <div className="issueStatusDetail">
-                <div className="updationBox">
-                
-                    
-               </div>
+            <div>
+                 {this.abc}
             </div>
+           
         );
         case "Fixed":
         return (
             <div className="issueStatusDetail">
                 <div className="updationBox">
+                {this.abc}
                     <Container className="SoluctionHdr"><u><b>Soluction:</b></u></Container>
                     <Container><CardText className="cardText">{articalDB.updatedIssueDetail}</CardText></Container>
                 </div>    
@@ -261,7 +281,7 @@ searchHandler(event){
         return(
             <div className="myArtical">
 
-
+                            
                                    <div className="updateFormWrap" style={{display:"none"}}> 
                                    <div className="whiteBox"></div>
                                    <div className="updateFormSubWrap"> 
@@ -379,8 +399,9 @@ searchHandler(event){
                         </CardBody>
                         <CardFooter>
                           <small className="footerTxt font-italic grayData">Posted by:  <i className="primary">{articalDB.userName}</i> <span className="lineData">|</span> Posted on: <i className="primary">{articalDB.currentDate}</i> </small>
-                          <span title="Update"  onClick={() => this.updateData(articalDB)} className="cursor UpdateBtn"></span>
-                          <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
+                          {/* <span title="Update"  onClick={() => this.updateData(articalDB)} className="cursor UpdateBtn"></span> */}
+                          {this.fnUpdateBtn(articalDB)}
+                         
                           
                           {/* <Button color="primary" onClick={() => this.updateData(articalDB)} className="UpdateBtn">Edit</Button> */}
                           

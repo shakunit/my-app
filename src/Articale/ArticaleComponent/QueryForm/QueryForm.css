@@ -14,7 +14,7 @@
     float: right;
     color: #168780 !important;
     font-size: 24px;
-    right: 14px;
+    
     position: relative;
     bottom: 8px;
 }
@@ -340,7 +340,15 @@
     width: 24px;
     height: 24px;
     float: right;
-    margin-right: 0px;
+    margin-left: 14px;
+}
+.UpdateBtnDisable{
+    background: url(../../assets/images/updateBtnDeactive.png) no-repeat scroll center center;
+    width: 24px;
+    height: 24px;
+    float: right;
+    margin-left: 14px;
+    cursor: default !important;
 }
 .updateFormmainWrap {
    
