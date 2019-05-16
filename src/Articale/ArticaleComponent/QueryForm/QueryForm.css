@@ -10,9 +10,13 @@
     cursor: pointer;
 }
 
-.leftTrace{
+.leftTrace {
     float: right;
     color: #168780 !important;
+    font-size: 24px;
+    right: 14px;
+    position: relative;
+    bottom: 8px;
 }
 .leftTrace:hover{
     color: #0e5450 !important;
@@ -283,9 +287,11 @@
 .myArticalSubmitForm {
     background-color: #f4f5f7;
     border: 1px solid #cacaca;
-    width: 80%;
+    width: 50%;
     margin: 0px auto;
 }
+.myArticalSubmitForm h5{color: #fff;}
+.updateFormmainWrap h5{color: #fff;}
 .whiteBox {
     position: fixed;
     left: 0px;
@@ -294,6 +300,9 @@
     width: 100%;
     height: 100%;
     z-index: 1;
+}
+.abc{
+    display: none;
 }
 
 
@@ -319,3 +328,54 @@
     
     float: left !important;
 }
+.updateFormSubWrap {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    left: 0px;
+    
+}
+.UpdateBtn{
+    background: url(../../assets/images/updateBtnActive.png) no-repeat scroll center center;
+    width: 24px;
+    height: 24px;
+    float: right;
+    margin-right: 0px;
+}
+.updateFormmainWrap {
+   
+    margin: 0px auto;
+    width: 50%;
+    
+    background-color: #f4f5f7;
+    border: 1px solid #cacaca;
+}
+.myArtical{margin: 0px auto;}
+
+@media screen and (max-width: 1200px) {
+    .container {max-width: 920px !important;}
+    .updateFormmainWrap {width: 71%;}
+    .myArticalSubmitForm {width: 71%;}
+  }
+  @media screen and (max-width: 992px) {
+    .container {max-width: 920px !important;}
+    .updateFormmainWrap {width: 71%;}
+    .myArticalSubmitForm {width: 71%;}
+    .disableItm{display: none !important;}
+  }
+
+  @media screen and (max-width: 768px) {
+    
+    .container {max-width: 100% !important;}
+    .disableItm{display: none !important;}
+    .updateFormmainWrap {width: 90%;}
+    .myArticalSubmitForm {width: 90%;}
+    .text-right {position: absolute; right: 10px;}
+  }
+  @media screen and (max-width: 576px) {
+    .container{max-width: 100% !important;}
+    .updateFormmainWrap {width: 60%;}
+    .updateFormmainWrap {width: 90%;}
+    .myArticalSubmitForm {width: 90%;}
+    
+  }

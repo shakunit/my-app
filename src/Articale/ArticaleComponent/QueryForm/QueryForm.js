@@ -6,7 +6,7 @@ import Firebase from "firebase";
 import Config from './Config';
 import './QueryForm.css'
 import QuerySubmitForm from './QuerySubmitForm';
-import QueryIssueClosingForm from './QueryIssueClosingForm';
+import $ from 'jquery';
 
 function searchingFor(term){
     return function (x){
@@ -24,7 +24,6 @@ constructor(props) {
     Firebase.initializeApp(Config);
 
     this.state = {
-        modal: false,
         inputTxt:'',
         textareaTxt:'',
         term:'',
@@ -44,6 +43,7 @@ fnCurrentDate = () => {
 componentDidMount() {
     this.getUserData();
     console.log("componentDidMount")
+
     
   }
 
@@ -52,7 +52,12 @@ componentDidMount() {
       this.writeUserData();
     }
     
-    
+    $(".UpdateBtn").click(function(){
+        $(".updateFormWrap").show();
+    })
+    $(".UpdateCancel").click(function(){
+        $(".updateFormWrap").hide();
+    })
   }
 
 
@@ -159,7 +164,7 @@ removeData = developer => {
         
         this.setState({selectedOption:null});
         
-    
+        $(".updateFormWrap").hide();
        };
 // updateData1 = (index) => {
     
@@ -223,19 +228,7 @@ articalUpdateList = (articalDB, index) =>{
             <div className="issueStatusDetail">
                 <div className="updationBox">
                 
-                    <Form>
-                    <FormGroup>
-                            <input type="hidden" ref="uid" />
-                            <Label for="updaterName" className="issueStatusDetailtxt">Name:</Label>
-                            <textarea rows="1" name="name" id="updaterName" placeholder="Enter your name" onChange={this.updateInputBox} className="border_radius_0 form-control issueStatusDetailtxt" ></textarea>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="updatedIssueDetail" className="issueStatusDetailtxt">Soluction Details:</Label>
-                            <textarea rows="3" id="updatedIssueDetail" ref="updatedIssueDetail" className="border_radius_0 form-control issueStatusDetailtxt" onChange={this.updateTextareaBox} ></textarea>
-                            {/* <Button onClick={() => this.updateData(index)} className="issueStatusDetailtxt btnSuccess">Submit</Button> */}
-                        </FormGroup>
-                        
-                    </Form> 
+                    
                </div>
             </div>
         );
@@ -269,7 +262,10 @@ searchHandler(event){
             <div className="myArtical">
 
 
-
+                                   <div className="updateFormWrap" style={{display:"none"}}> 
+                                   <div className="whiteBox"></div>
+                                   <div className="updateFormSubWrap"> 
+                                   <div className="updateFormmainWrap">
                                     <ModalHeader >New Artical</ModalHeader>
                                     <ModalBody>
                                         <FormGroup row>
@@ -285,7 +281,7 @@ searchHandler(event){
                                         </FormGroup>
                                         <FormGroup row>
                                             
-                                            <Label for="updaterName" sm={2}>updaterName:</Label>
+                                            <Label for="updaterName" sm={2}>Name:</Label>
                                             <Col sm={10}>
                                             <input type="text" name="name" id="updaterName" placeholder="Enter your name" ref="updaterName" className="form-control" value={articalDB.updaterName}/>
                                             </Col>
@@ -299,7 +295,7 @@ searchHandler(event){
                                         </FormGroup>
                             
                                         <FormGroup row>
-                                            <Label for="updatedIssueDetail"sm={2}>updatedIssueDetail:</Label>
+                                            <Label for="updatedIssueDetail"sm={2}>Soluction:</Label>
                                             <Col sm={10}>
                                                 <textarea className="form-control" rows="4" id="updatedIssueDetail" ref="updatedIssueDetail" value={articalDB.updatedIssueDetail}></textarea>
                                             </Col>
@@ -308,10 +304,11 @@ searchHandler(event){
                                     </ModalBody>
                                     <ModalFooter>
                                         <Button className="btnSuccess" onClick={this.handleSubmitCloseIssue}>Submit</Button>
-                                        <Button className="btnSuccess"  >Cancel</Button>
+                                        <Button className="UpdateCancel btnSuccess"  >Cancel</Button>
                                     </ModalFooter>
-
-
+                                    </div>
+                                    </div>
+                                    </div>
 
 
 
@@ -339,7 +336,7 @@ searchHandler(event){
                         </InputGroup>
                         
                         
-                            <InputGroup disabled>
+                            <InputGroup disabled className="disableItm">
                                 <InputGroupAddon addonType="prepend">
                                 <InputGroupText disabled>By User</InputGroupText>
                                 </InputGroupAddon>
@@ -382,12 +379,13 @@ searchHandler(event){
                         </CardBody>
                         <CardFooter>
                           <small className="footerTxt font-italic grayData">Posted by:  <i className="primary">{articalDB.userName}</i> <span className="lineData">|</span> Posted on: <i className="primary">{articalDB.currentDate}</i> </small>
-                          <span onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
-
-                          <Button color="primary" onClick={() => this.updateData(articalDB)} >Edit</Button>
+                          <span title="Update"  onClick={() => this.updateData(articalDB)} className="cursor UpdateBtn"></span>
+                          <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
+                          
+                          {/* <Button color="primary" onClick={() => this.updateData(articalDB)} className="UpdateBtn">Edit</Button> */}
+                          
                         </CardFooter>
-                            
-                            {/* {this.articalUpdateList(articalDB, index)} */}
+                        {this.articalUpdateList(articalDB, index)}   
                             
                     </UncontrolledCollapse>   
                     </Card>
