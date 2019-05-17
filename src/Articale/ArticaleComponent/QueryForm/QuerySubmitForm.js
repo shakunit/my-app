@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { UncontrolledCollapse, InputGroup, InputGroupText, InputGroupAddon, Input, Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText, CardImg} from 'reactstrap';
+import { Alert,  Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label} from 'reactstrap';
 
 import Firebase from "firebase";
 
-import Config from './Config';
 
+import $ from 'jquery';
 
 function searchingFor(term){
     return function (x){
@@ -43,7 +43,9 @@ componentDidMount() {
     if (prevState !== this.state) {
       this.writeUserData();
     }
-    
+    $(".alertBtn").click(function(){
+        $(".AlertWrap").hide();
+    })
     
   }
 
@@ -84,42 +86,49 @@ event.preventDefault();
     let updaterName =this.refs.updaterName.value;
     let updatedIssueDetail = this.refs.updatedIssueDetail.value;
     let updationDate =this.refs.updationDate.value;
-    
-    if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url ) {
-      const { articalDB } = this.state;
-      const devIndex = articalDB.findIndex(data => {
-        return data.uid === uid;
-      });
-      articalDB[devIndex].userName = userName;
-      articalDB[devIndex].issueTitle = issueTitle;
-      articalDB[devIndex].issueBrowser = issueBrowser;
-      articalDB[devIndex].issueDetail = issueDetail;
-      articalDB[devIndex].currentDate = currentDate;
-      articalDB[devIndex].issueStatus = issueStatus;
-      articalDB[devIndex].url = url;
-      articalDB[devIndex].updaterName = updaterName;
-      articalDB[devIndex].updatedIssueDetail = updatedIssueDetail;
-      articalDB[devIndex].updationDate = updationDate;
-
-      this.setState({ articalDB });
-    } else if (userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url ) {
-      const uid = new Date().getTime().toString();
-      const { articalDB } = this.state;
-      articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatus, url, updaterName, updatedIssueDetail, updationDate});
-      //var newPostKey = Firebase.database().ref().child('articalDB').push().devIndex;
-      
-      this.setState({ articalDB });
+    if(userName=="" || issueTitle=="" || issueBrowser=="" || issueDetail==""  || issueStatus==""){
+      $(".AlertWrap").show();
     }
-
-    this.refs.userName.value = "";
-    this.refs.issueTitle.value = "";
-    this.refs.issueBrowser.value = "";
-    this.refs.issueDetail.value = "";
-    this.refs.url.value = "";
-    this.currentDate = "";
-    this.refs.uid.value = "";
-    this.selectedOption = null;
-    this.setState({selectedOption:null});
+    else{
+      if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url ) {
+        const { articalDB } = this.state;
+        const devIndex = articalDB.findIndex(data => {
+          return data.uid === uid;
+        });
+        articalDB[devIndex].userName = userName;
+        articalDB[devIndex].issueTitle = issueTitle;
+        articalDB[devIndex].issueBrowser = issueBrowser;
+        articalDB[devIndex].issueDetail = issueDetail;
+        articalDB[devIndex].currentDate = currentDate;
+        articalDB[devIndex].issueStatus = issueStatus;
+        articalDB[devIndex].url = url;
+        articalDB[devIndex].updaterName = updaterName;
+        articalDB[devIndex].updatedIssueDetail = updatedIssueDetail;
+        articalDB[devIndex].updationDate = updationDate;
+  
+        this.setState({ articalDB });
+      } else if (userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url ) {
+        const uid = new Date().getTime().toString();
+        const { articalDB } = this.state;
+        articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatus, url, updaterName, updatedIssueDetail, updationDate});
+        //var newPostKey = Firebase.database().ref().child('articalDB').push().devIndex;
+        
+        this.setState({ articalDB });
+      }
+  
+      this.refs.userName.value = "";
+      this.refs.issueTitle.value = "";
+      this.refs.issueBrowser.value = "";
+      this.refs.issueDetail.value = "";
+      this.refs.url.value = "";
+      this.currentDate = "";
+      this.refs.uid.value = "";
+      this.selectedOption = null;
+      this.setState({selectedOption:null});
+      
+      $(".SuccessMssg").show();
+    }
+    
     
 
    };
@@ -145,8 +154,28 @@ handleFormSubmit = (formSubmitEvent) =>{
         
         
         return(
+          
+
+          
             <div className="myArticalSubmitForm">
-              
+            
+              <div className="AlertWrap">
+              <div className="whiteBox"></div>
+                   <Alert color="success" className="ErrorMssg"> 
+                   
+                    <h4 className="alert-heading">Well done!</h4>
+                    <p>
+                      Aww yeah, you successfully read this important alert message. This example text is going
+                      to run a bit longer so that you can see how spacing within an alert works with this kind
+                      of content.
+                    </p>
+                    <hr />
+                    <Button className="mb-0 alertBtn" color="success">Continue</Button>
+                    
+                  </Alert>
+              </div>
+
+
                         <ModalHeader >New Artical</ModalHeader>
                         <ModalBody>
                         
@@ -197,12 +226,10 @@ handleFormSubmit = (formSubmitEvent) =>{
                             </FormGroup>
                          </ModalBody>
                         <ModalFooter>
-                            <Button className="btnSuccess" id="submitForm" onClick={this.handleSubmit}>Submit</Button>
+                            <Button className="btnSuccess"   onClick={this.handleSubmit}>Submit</Button>
                             <Button className="btnSuccess"   id="submitForm">Cancel</Button>
+                            
                         </ModalFooter>
-                        
-                                
-                 
                     
             </div>
         )

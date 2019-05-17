@@ -115,7 +115,10 @@
     position: absolute;
     right: 10px;
     top: 18px;
-    cursor: pointer;
+    
+}
+.card-header{
+    cursor: pointer !important;
 }
 .showDetails:hover{
     color: #404448!important;
@@ -359,7 +362,24 @@
     border: 1px solid #cacaca;
 }
 .myArtical{margin: 0px auto;}
-
+.ErrorMssg {
+    margin: 0px auto;
+    width: 50%;
+    border-radius: 0px !important;
+    z-index: 1;
+}
+.AlertWrap{
+    position: absolute;
+    left: 0;
+    top: 25%;
+    display: none;
+}
+.alertBtn{
+    float:right  !important;
+}
+.alert-success{
+overflow: hidden;
+}
 @media screen and (max-width: 1200px) {
     .container {max-width: 920px !important;}
     .updateFormmainWrap {width: 71%;}

@@ -23,17 +23,15 @@ constructor(props) {
     return(
       <div>
         <Navbar light expand="md">
-          <NavbarBrand href="/">reactstrap</NavbarBrand>
+          <NavbarBrand href="/">RESOLVE</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="#">GitHub</NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
+              
+              {/* <NavItem>
+                <NavLink href="#">...</NavLink>
+              </NavItem> */}
+              {/* <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Options
                 </DropdownToggle>
@@ -49,7 +47,7 @@ constructor(props) {
                     Reset
                   </DropdownItem>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </UncontrolledDropdown> */}
             </Nav>
           </Collapse>
         </Navbar>

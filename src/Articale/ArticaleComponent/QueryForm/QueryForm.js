@@ -221,7 +221,14 @@ lockIcon = (articalDB) =>{
 }
 fnUpdateBtn= (articalDB, index) =>{
     switch(articalDB.issueStatus ) {
-                                
+        
+        case "Close":
+        return (
+            <span>
+            <p title="Update"  className="cursor UpdateBtnDisable"></p>
+            <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
+            </span>
+        );
         case "Open":
         return (
             <span>
@@ -232,7 +239,7 @@ fnUpdateBtn= (articalDB, index) =>{
         case "Fixed":
         return (
             <span>
-            <span title="Update"  className="cursor UpdateBtnDisable"></span>
+            <p title="Update"  className="cursor UpdateBtnDisable"></p>
             <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace" ><i className="fas fa-trash-restore-alt"></i></span>
             </span>
         );
@@ -340,6 +347,8 @@ searchHandler(event){
                         </CardBody>
                     </Card>
                     </UncontrolledCollapse> 
+                    
+                   
 
                <Container>
                 <Row>
@@ -374,11 +383,11 @@ searchHandler(event){
                     
                     <Card key={index}>
                     
-                        <CardHeader>
+                        <CardHeader id={"toggler"+index}> 
                             
                             <h3 className="hdrTxt">{articalDB.issueTitle}</h3> 
                             {this.lockIcon(articalDB)}
-                            <small className="text-muted showDetails" id={"toggler"+index} style={{ marginBottom: '1rem' }}>View <i className="fa fa-arrow-right" aria-hidden="true"></i></small>
+                            <small className="text-muted showDetails" style={{ marginBottom: '1rem' }}>View <i className="fa fa-arrow-right" aria-hidden="true"></i></small>
                            
                         </CardHeader>
                         <UncontrolledCollapse toggler={"#toggler"+index}>
