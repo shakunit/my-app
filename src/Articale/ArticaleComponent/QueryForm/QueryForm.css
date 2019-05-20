@@ -10,6 +10,8 @@
     cursor: pointer;
 }
 
+
+
 .leftTrace {
     float: right;
     color: #168780 !important;
@@ -260,6 +262,7 @@
     border-radius: 0rem !important;
     background-color: #3f91cb !important;
 }
+
 .detailForm{
     display: block !important;
 }
@@ -368,18 +371,31 @@
     border-radius: 0px !important;
     z-index: 1;
 }
-.AlertWrap{
+.AlertWrapError, .AlertWraCorrect{
     position: absolute;
     left: 0;
     top: 25%;
     display: none;
 }
-.alertBtn{
+.alertBtnError,.alertBtnCorrect{
     float:right  !important;
 }
-.alert-success{
+.alert-success, .alert-danger,.alert-secondary{
 overflow: hidden;
 }
+
+.ErrorMssg{
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+} 
+.modal-header{
+    width: 100.4%;
+    margin: -1px 0px 0px -1px;
+}
+.btn {border-radius: 0 !important;}
+.form-control {border-radius: 0 !important;}
+
 @media screen and (max-width: 1200px) {
     .container {max-width: 920px !important;}
     .updateFormmainWrap {width: 71%;}

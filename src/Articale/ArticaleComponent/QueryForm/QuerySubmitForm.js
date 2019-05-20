@@ -43,9 +43,14 @@ componentDidMount() {
     if (prevState !== this.state) {
       this.writeUserData();
     }
-    $(".alertBtn").click(function(){
-        $(".AlertWrap").hide();
+    $(".alertBtnError").click(function(){
+        $(".AlertWrapError").hide();
     })
+    $(".alertBtnCorrect").click(function(){
+      setTimeout(function(){  $(".AlertWraCorrect").hide(); }, 3000);
+     
+  })
+    
     
   }
 
@@ -87,7 +92,7 @@ event.preventDefault();
     let updatedIssueDetail = this.refs.updatedIssueDetail.value;
     let updationDate =this.refs.updationDate.value;
     if(userName=="" || issueTitle=="" || issueBrowser=="" || issueDetail==""  || issueStatus==""){
-      $(".AlertWrap").show();
+      $(".AlertWrapError").show();
     }
     else{
       if (uid && userName && issueTitle && issueBrowser && issueDetail && currentDate && issueStatus && url ) {
@@ -126,7 +131,7 @@ event.preventDefault();
       this.selectedOption = null;
       this.setState({selectedOption:null});
       
-      $(".SuccessMssg").show();
+      $(".AlertWraCorrect").show();
     }
     
     
@@ -159,7 +164,23 @@ handleFormSubmit = (formSubmitEvent) =>{
           
             <div className="myArticalSubmitForm">
             
-              <div className="AlertWrap">
+              <div className="AlertWrapError">
+              <div className="whiteBox"></div>
+                   <Alert color="secondary" className="ErrorMssg"> 
+                   
+                    <h4 className="alert-heading">Error</h4>
+                    <p>
+                     Please update the all filed, after that preess the submit button.
+                     Aww yeah, you successfully read this important alert message. This example text is going
+                      to run a bit longer so that you can see how spacing within an alert works with this kind
+                      of content
+                    </p>
+                    <hr />
+                    <Button className="mb-0 alertBtnError" color="secondary">Continue</Button>
+                    
+                  </Alert>
+              </div>
+              <div className="AlertWraCorrect">
               <div className="whiteBox"></div>
                    <Alert color="success" className="ErrorMssg"> 
                    
@@ -170,7 +191,7 @@ handleFormSubmit = (formSubmitEvent) =>{
                       of content.
                     </p>
                     <hr />
-                    <Button className="mb-0 alertBtn" color="success">Continue</Button>
+                    <Button className="mb-0 alertBtnCorrect"  id="submitForm" color="success">Continue</Button>
                     
                   </Alert>
               </div>
