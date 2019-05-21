@@ -6,6 +6,7 @@ import Firebase from "firebase";
 import Config from './Config';
 import './QueryForm.css'
 import QuerySubmitForm from './QuerySubmitForm';
+import QueryFormSearch from './QueryFormSearch';
 import $ from 'jquery';
 
 function searchingFor(term){
@@ -29,6 +30,9 @@ constructor(props) {
         term:'',
         articalDB: []
     };
+    this.newState={
+        
+    }
 
     this.toggle = this.toggle.bind(this);
     this.searchHandler = this.searchHandler.bind(this);
@@ -46,9 +50,10 @@ componentDidMount() {
 
     
   }
-
+  
   componentDidUpdate(prevProps, prevState) {
     if (prevState !== this.state) {
+      
       this.writeUserData();
     }
     
@@ -67,10 +72,9 @@ clearFilter = () =>{
 
 
 writeUserData = () => {
-    Firebase.database()
-      .ref("/")
-      .set(this.state);
-    //console.log("DATA SAVED");
+    // Firebase.database()
+    //   .ref("/")
+    //   .set(this.state);
     
   };
 
@@ -79,7 +83,6 @@ writeUserData = () => {
     ref.on("value", snapshot => {
       const state = snapshot.val();
       this.setState(state);
-      
     });
     
   };
@@ -277,6 +280,7 @@ articalUpdateList = (articalDB, index) =>{
 
 searchHandler(event){
     this.setState({term: event.target.value});
+    
 }
 
 
@@ -362,6 +366,7 @@ searchHandler(event){
                                 <InputGroupText><i className="fas fa-sliders-h"></i> <span>By Issue</span></InputGroupText>
                                 </InputGroupAddon>
                                 <input type="text" className="form-control" onChange={this.searchHandler} value={this.state.term}/>
+                                
                         </InputGroup>
                         
                         
