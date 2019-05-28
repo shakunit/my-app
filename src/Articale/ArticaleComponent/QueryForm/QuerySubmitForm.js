@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Alert,  Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label} from 'reactstrap';
+import { Alert,  Col, Button, ModalHeader, ModalBody, ModalFooter, FormGroup, Label} from 'reactstrap';
 
 import Firebase from "firebase";
+
+
 
 
 import $ from 'jquery';
@@ -35,7 +37,6 @@ fnCurrentDate = () => {
 } 
 componentDidMount() {
     this.getUserData();
-    console.log("componentDidMount")
     
   }
 
@@ -47,7 +48,7 @@ componentDidMount() {
         $(".AlertWrapError").hide();
     })
     $(".alertBtnCorrect").click(function(){
-      setTimeout(function(){  $(".AlertWraCorrect").hide(); }, 3000);
+      setTimeout(function(){  $(".AlertWrapCorrect").hide(); }, 3000);
      
   })
     
@@ -131,7 +132,7 @@ event.preventDefault();
       this.selectedOption = null;
       this.setState({selectedOption:null});
       
-      $(".AlertWraCorrect").show();
+      $(".AlertWrapCorrect").show();
     }
     
     
@@ -149,11 +150,12 @@ handleOptionChange = (changeEvent) => {
 handleFormSubmit = (formSubmitEvent) =>{
     //formSubmitEvent.preventDefault();
 
-  console.log('You have selected:', this.state.selectedOption);
   return this.state.selectedOption;
 }  
 
-
+handleChange = value => {
+  this.setState({ mdeValue: value });
+}
 
     render(){
         
@@ -166,30 +168,29 @@ handleFormSubmit = (formSubmitEvent) =>{
             
               <div className="AlertWrapError">
               <div className="whiteBox"></div>
-                   <Alert color="secondary" className="ErrorMssg"> 
+                   <Alert color="danger" className="ErrorMssg"> 
                    
                     <h4 className="alert-heading">Error</h4>
-                    <p>
-                     Please update the all filed, after that preess the submit button.
-                     Aww yeah, you successfully read this important alert message. This example text is going
-                      to run a bit longer so that you can see how spacing within an alert works with this kind
-                      of content
-                    </p>
+                    <p>Please update the all files, after that preess the submit button.</p>
+                    <ul>
+                      <li>Please enter your name</li>
+                      <li>Please enter a issue</li>
+                      <li>Please enter at lest a browser/device name</li>
+                      <li>Please enter url or local path</li>
+                      <li>Your Status must be at open and close</li>
+                      <li>Please enter issue details</li>
+                    </ul>
                     <hr />
-                    <Button className="mb-0 alertBtnError" color="secondary">Continue</Button>
+                    <Button className="mb-0 alertBtnError" color="danger">Continue</Button>
                     
                   </Alert>
               </div>
-              <div className="AlertWraCorrect">
+              <div className="AlertWrapCorrect">
               <div className="whiteBox"></div>
                    <Alert color="success" className="ErrorMssg"> 
                    
                     <h4 className="alert-heading">Well done!</h4>
-                    <p>
-                      Aww yeah, you successfully read this important alert message. This example text is going
-                      to run a bit longer so that you can see how spacing within an alert works with this kind
-                      of content.
-                    </p>
+                    <p>Your data has been successfully updated.</p>
                     <hr />
                     <Button className="mb-0 alertBtnCorrect"  id="submitForm" color="success">Continue</Button>
                     

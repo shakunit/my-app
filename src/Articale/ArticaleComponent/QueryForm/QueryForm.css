@@ -12,17 +12,7 @@
 
 
 
-.leftTrace {
-    float: right;
-    color: #168780 !important;
-    font-size: 24px;
-    
-    position: relative;
-    bottom: 8px;
-}
-.leftTrace:hover{
-    color: #0e5450 !important;
-}
+
 .footerTxt{
     margin-left: 40px;
 }
@@ -371,11 +361,13 @@
     border-radius: 0px !important;
     z-index: 1;
 }
-.AlertWrapError, .AlertWraCorrect{
+.AlertWrapError, .AlertWrapCorrect,.UpdatedWrapError,.UpdatedWrapCorrect{
     position: absolute;
     left: 0;
     top: 25%;
     display: none;
+    z-index: 2;
+    width:100%;
 }
 .alertBtnError,.alertBtnCorrect{
     float:right  !important;
@@ -383,7 +375,7 @@
 .alert-success, .alert-danger,.alert-secondary{
 overflow: hidden;
 }
-
+.alert{width:35%;}
 .ErrorMssg{
     color: #721c24;
     background-color: #f8d7da;
@@ -395,7 +387,34 @@ overflow: hidden;
 }
 .btn {border-radius: 0 !important;}
 .form-control {border-radius: 0 !important;}
+pre {
+    display: block;
+    font-size: 14px !important;
+    color: #3d4451 !important;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+}
 
+
+.diable {
+    float: right;
+    color: #c2c2c2 !important;
+    font-size: 24px;
+    
+    position: relative;
+    bottom: 8px;
+}
+
+.leftTrace {
+    float: right;
+    color: #168780 !important;
+    font-size: 24px;
+    
+    position: relative;
+    bottom: 8px;
+}
+.leftTrace:hover{
+    color: #0e5450 !important;
+}
 @media screen and (max-width: 1200px) {
     .container {max-width: 920px !important;}
     .updateFormmainWrap {width: 71%;}
@@ -406,6 +425,7 @@ overflow: hidden;
     .updateFormmainWrap {width: 71%;}
     .myArticalSubmitForm {width: 71%;}
     .disableItm{display: none !important;}
+    .alert{width:40% !important;}
   }
 
   @media screen and (max-width: 768px) {
@@ -415,11 +435,13 @@ overflow: hidden;
     .updateFormmainWrap {width: 90%;}
     .myArticalSubmitForm {width: 90%;}
     .text-right {position: absolute; right: 10px;}
+    .alert{width:50% !important;}
   }
   @media screen and (max-width: 576px) {
     .container{max-width: 100% !important;}
     .updateFormmainWrap {width: 60%;}
     .updateFormmainWrap {width: 90%;}
     .myArticalSubmitForm {width: 90%;}
+    .alert{width:70% !important;}
     
   }

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { UncontrolledCollapse, CustomInput, InputGroup, InputGroupText, InputGroupAddon, Input, Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText, CardImg} from 'reactstrap';
+import { Alert, UncontrolledCollapse, CustomInput, InputGroup, InputGroupText, InputGroupAddon, Container, Row, Col, Button, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Card, CardHeader, CardFooter, CardBody,  CardText} from 'reactstrap';
 
 import Firebase from "firebase";
 
 import Config from './Config';
 import './QueryForm.css'
 import QuerySubmitForm from './QuerySubmitForm';
-import QueryFormSearch from './QueryFormSearch';
+
 import $ from 'jquery';
 
 function searchingFor(term){
@@ -46,15 +46,14 @@ fnCurrentDate = () => {
 } 
 componentDidMount() {
     this.getUserData();
-    console.log("componentDidMount")
+    
 
     
   }
   
   componentDidUpdate(prevProps, prevState) {
     if (prevState !== this.state) {
-      
-      this.writeUserData();
+       this.writeUserData();
     }
     
     $(".UpdateBtn").click(function(){
@@ -63,6 +62,15 @@ componentDidMount() {
     $(".UpdateCancel").click(function(){
         $(".updateFormWrap").hide();
     })
+
+    $(".alertBtnError").click(function(){
+        $(".UpdatedWrapError").hide();
+    })
+    $(".alertBtnCorrect").click(function(){
+      setTimeout(function(){  $(".UpdatedWrapCorrect").hide(); }, 3000);
+     
+    })
+
   }
 
 
@@ -72,10 +80,10 @@ clearFilter = () =>{
 
 
 writeUserData = () => {
-    // Firebase.database()
-    //   .ref("/")
-    //   .set(this.state);
     
+    if(this.state.term==""){
+        Firebase.database().ref("/").set(this.state);
+    }
   };
 
   getUserData = () => {
@@ -123,69 +131,71 @@ removeData = developer => {
         let updaterName =this.refs.updaterName.value;
         let updatedIssueDetail = this.refs.updatedIssueDetail.value;
         let updationDate =this.refs.updationDate.value;
+        if(updaterName=="" || updatedIssueDetail=="" ){
+            $(".UpdatedWrapError").show();
+            }
+                //alert("issueBrowser=> "+issueBrowser)
+        else{
+            if (uid && userName) {
+                    
+                const { articalDB } = this.state;
+                const devIndex = articalDB.findIndex(data => {
+                    return data.uid === uid;
+                });
+                articalDB[devIndex].userName = userName;
+                articalDB[devIndex].issueTitle = issueTitle;
+                articalDB[devIndex].issueBrowser = issueBrowser;
+                articalDB[devIndex].issueDetail = issueDetail;
+                articalDB[devIndex].currentDate = currentDate;
+                articalDB[devIndex].issueStatus = issueStatus;
+                articalDB[devIndex].url = url;
+                articalDB[devIndex].updaterName = updaterName;
+                articalDB[devIndex].updatedIssueDetail = updatedIssueDetail;
+                articalDB[devIndex].updationDate = updationDate;
 
-        //alert("issueBrowser=> "+issueBrowser)
-        if (uid && userName) {
-            console.log("11111")
-          const { articalDB } = this.state;
-          const devIndex = articalDB.findIndex(data => {
-            return data.uid === uid;
-          });
-          articalDB[devIndex].userName = userName;
-          articalDB[devIndex].issueTitle = issueTitle;
-          articalDB[devIndex].issueBrowser = issueBrowser;
-          articalDB[devIndex].issueDetail = issueDetail;
-          articalDB[devIndex].currentDate = currentDate;
-          articalDB[devIndex].issueStatus = issueStatus;
-          articalDB[devIndex].url = url;
-          articalDB[devIndex].updaterName = updaterName;
-          articalDB[devIndex].updatedIssueDetail = updatedIssueDetail;
-          articalDB[devIndex].updationDate = updationDate;
 
-
-          this.setState({ articalDB });
-        } else if (userName) {
-            console.log("22222")
-          const uid = new Date().getTime().toString();
-          const { articalDB } = this.state;
-          articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatus, url, updaterName, updatedIssueDetail, updationDate});
-          //var newPostKey = Firebase.database().ref().child('articalDB').push().devIndex;
-          
-          this.setState({ articalDB });
-        }
-    
-        this.refs.userName.value = "";
-        this.refs.issueTitle.value = "";
-        this.refs.issueBrowser.value = "";
-        this.refs.issueDetail.value = "";
-        this.refs.url.value = "";
-        this.currentDate = "";
-        this.refs.uid.value = "";
-        this.refs.updaterName.value = "";
-        this.refs.updatedIssueDetail.value = "";
-        this.selectedOption = null;
-        
-        this.setState({selectedOption:null});
-        
-        $(".updateFormWrap").hide();
+                this.setState({ articalDB });
+                } else if (userName) {
+                    console.log("22222")
+                const uid = new Date().getTime().toString();
+                const { articalDB } = this.state;
+                articalDB.push({ uid, userName, issueTitle, issueBrowser, issueDetail, currentDate, issueStatus, url, updaterName, updatedIssueDetail, updationDate});
+                //var newPostKey = Firebase.database().ref().child('articalDB').push().devIndex;
+                
+                this.setState({ articalDB });
+                }
+            
+                this.refs.userName.value = "";
+                this.refs.issueTitle.value = "";
+                this.refs.issueBrowser.value = "";
+                this.refs.issueDetail.value = "";
+                this.refs.url.value = "";
+                this.currentDate = "";
+                this.refs.uid.value = "";
+                this.refs.updaterName.value = "";
+                this.refs.updatedIssueDetail.value = "";
+                this.selectedOption = null;
+                
+                this.setState({selectedOption:null});
+                
+                $(".updateFormWrap").hide();
+                this.clearFilter();
+        }        
        };
-// updateData1 = (index) => {
-    
-//     let adaNameRef = Firebase.database().ref('articalDB/'+index+'/');
-    
-//     adaNameRef.update({
 
+
+
+
+// updateData1 = (index) => {
+//     let adaNameRef = Firebase.database().ref('articalDB/'+index+'/');
+//     adaNameRef.update({
 //         updaterName: this.state.inputTxt
 //         // updatedIssueDetail:this.state.textareaTxt,
 //         // issueStatus: "Fixed",
 //         // updationDate: this.fnCurrentDate()
-
 //     });
-       
 //       this.setState({inputTxt : null})
 //       this.setState({textareaTxt : null})
-
-
 //   };
 
 
@@ -209,6 +219,11 @@ handleFormSubmit = (formSubmitEvent) =>{
   return this.state.selectedOption;
 }  
 
+
+deleteAlert = () =>{
+    alert("You need admin permission to delete this file !!!")
+}
+
 lockIcon = (articalDB) =>{
     
         switch(articalDB.issueStatus ) {
@@ -229,21 +244,24 @@ fnUpdateBtn= (articalDB, index) =>{
         return (
             <span>
             <p title="Update"  className="cursor UpdateBtnDisable"></p>
-            <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
+            {/* <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span> */}
+            <span title="Delete" onClick={() => this.deleteAlert()} className="diable"><i className="fas fa-trash-restore-alt"></i></span>
             </span>
         );
         case "Open":
         return (
             <span>
             <span title="Update"  onClick={() => this.updateData(articalDB)} className="cursor UpdateBtn"></span>
-            <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
+            {/* <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span> */}
+            <span title="Delete" onClick={() => this.deleteAlert()} className="diable"><i className="fas fa-trash-restore-alt"></i></span>
             </span>
         );
         case "Fixed":
         return (
             <span>
             <p title="Update"  className="cursor UpdateBtnDisable"></p>
-            <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace" ><i className="fas fa-trash-restore-alt"></i></span>
+            {/* <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace" ><i className="fas fa-trash-restore-alt"></i></span> */}
+            <span title="Delete" onClick={() => this.deleteAlert()} className="diable"><i className="fas fa-trash-restore-alt"></i></span>
             </span>
         );
         default:
@@ -266,8 +284,8 @@ articalUpdateList = (articalDB, index) =>{
             <div className="issueStatusDetail">
                 <div className="updationBox">
                 {this.abc}
-                    <Container className="SoluctionHdr"><u><b>Soluction:</b></u></Container>
-                    <Container><CardText className="cardText">{articalDB.updatedIssueDetail}</CardText></Container>
+                    <Container className="SoluctionHdr"><u><b>Solution:</b></u></Container>
+                    <Container><CardText className="cardText"><pre>{articalDB.updatedIssueDetail}</pre></CardText></Container>
                 </div>    
                 <div className="footer"><small className="footerTxt font-italic grayData">Posted by:  <i className="primary">{articalDB.updaterName}</i> <span className="lineData">|</span> Posted on: <i className="primary">{articalDB.updationDate}</i> </small></div>
             </div>
@@ -292,7 +310,40 @@ searchHandler(event){
         return(
             <div className="myArtical">
 
-                            
+
+
+                             <div className="UpdatedWrapError">
+                                <div className="whiteBox"></div>
+                                    <Alert color="secondary" className="ErrorMssg"> 
+                                    
+                                        <h4 className="alert-heading">Error</h4>
+                                        <p>Please update the all files, after that preess the submit button.</p>
+                                        <ul>
+                                            <li>Please enter your name</li>
+                                            <li>Please enter a solution</li>
+                                        
+                                        </ul>
+                                        <hr />
+                                        <Button className="mb-0 alertBtnError" color="secondary">Continue</Button>
+                                        
+                                    </Alert>
+                                </div>
+                                <div className="UpdatedWrapCorrect">
+                                <div className="whiteBox"></div>
+                                    <Alert color="success" className="ErrorMssg"> 
+                                    
+                                        <h4 className="alert-heading">Well done!</h4>
+                                        <p>Your data has been successfully updated.</p>
+                                        <hr />
+                                        <Button className="mb-0 alertBtnCorrect"  id="submitForm" color="success">Continue</Button>
+                                        
+                                    </Alert>
+                                </div>
+
+
+
+
+
                                    <div className="updateFormWrap" style={{display:"none"}}> 
                                    <div className="whiteBox"></div>
                                    <div className="updateFormSubWrap"> 
@@ -326,7 +377,7 @@ searchHandler(event){
                                         </FormGroup>
                             
                                         <FormGroup row>
-                                            <Label for="updatedIssueDetail"sm={2}>Soluction:</Label>
+                                            <Label for="updatedIssueDetail"sm={2}>Solution:</Label>
                                             <Col sm={10}>
                                                 <textarea className="form-control" rows="4" id="updatedIssueDetail" ref="updatedIssueDetail" value={articalDB.updatedIssueDetail}></textarea>
                                             </Col>
@@ -401,9 +452,10 @@ searchHandler(event){
                             <Row>
                                 {/* <Col xs="2"><CardImg top width="100%" src="https://cdn.auth0.com/blog/react-js/react.png" alt="Card image cap" /></Col> */}
                                 <Col className="margn_25">
-                                    <CardText className="text_14">{articalDB.issueDetail}</CardText>
+                                    <CardText className="text_14"><pre>{articalDB.issueDetail}</pre></CardText>
                                     
-                                     <span className="text_14"><u>Course Url:</u>   &nbsp; <a href={articalDB.url} className="text-primary">{articalDB.url}</a></span><br/>
+                                    
+                                     <span className="text_14"><u>Course Url:</u>   &nbsp; <a href={articalDB.url} target="_blank" className="text-primary">{articalDB.url}</a></span><br/>
                                      <span className="text_14"><u>Reported Browser:</u>    &nbsp;<small><i>{articalDB.issueBrowser}</i></small></span>
                                 </Col>
                             </Row>
