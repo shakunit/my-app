@@ -361,6 +361,11 @@
     border-radius: 0px !important;
     z-index: 1;
 }
+.alert-success {
+    color: #155724 !important;
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+}
 .AlertWrapError, .AlertWrapCorrect,.UpdatedWrapError,.UpdatedWrapCorrect{
     position: absolute;
     left: 0;

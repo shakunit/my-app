@@ -244,24 +244,24 @@ fnUpdateBtn= (articalDB, index) =>{
         return (
             <span>
             <p title="Update"  className="cursor UpdateBtnDisable"></p>
-            {/* <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span> */}
-            <span title="Delete" onClick={() => this.deleteAlert()} className="diable"><i className="fas fa-trash-restore-alt"></i></span>
+            <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
+            {/* <span title="Delete" onClick={() => this.deleteAlert()} className="diable"><i className="fas fa-trash-restore-alt"></i></span> */}
             </span>
         );
         case "Open":
         return (
             <span>
             <span title="Update"  onClick={() => this.updateData(articalDB)} className="cursor UpdateBtn"></span>
-            {/* <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span> */}
-            <span title="Delete" onClick={() => this.deleteAlert()} className="diable"><i className="fas fa-trash-restore-alt"></i></span>
+            <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace"><i className="fas fa-trash-restore-alt"></i></span>
+            {/* <span title="Delete" onClick={() => this.deleteAlert()} className="diable"><i className="fas fa-trash-restore-alt"></i></span> */}
             </span>
         );
         case "Fixed":
         return (
             <span>
             <p title="Update"  className="cursor UpdateBtnDisable"></p>
-            {/* <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace" ><i className="fas fa-trash-restore-alt"></i></span> */}
-            <span title="Delete" onClick={() => this.deleteAlert()} className="diable"><i className="fas fa-trash-restore-alt"></i></span>
+            <span title="Delete" onClick={() => this.removeData(articalDB)} className="cursor leftTrace" ><i className="fas fa-trash-restore-alt"></i></span>
+            {/* <span title="Delete" onClick={() => this.deleteAlert()} className="diable"><i className="fas fa-trash-restore-alt"></i></span> */}
             </span>
         );
         default:
