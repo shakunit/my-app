@@ -136,7 +136,7 @@ removeData = developer => {
             }
                 //alert("issueBrowser=> "+issueBrowser)
         else{
-            if (uid && userName) {
+            if (uid && userName) { 
                     
                 const { articalDB } = this.state;
                 const devIndex = articalDB.findIndex(data => {
